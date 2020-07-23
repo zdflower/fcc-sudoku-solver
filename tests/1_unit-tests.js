@@ -7,9 +7,11 @@
  */
 
 const chai = require('chai');
+
 const assert = chai.assert;
 
 const jsdom = require('jsdom');
+
 const { JSDOM } = jsdom;
 let Solver;
 
@@ -47,11 +49,22 @@ suite('UnitTests', () => {
     });
   });
 
-  suite('Function ____()', () => {
+  suite('Function crearNuevoPuzzle()', () => {
     test('Parses a valid puzzle string into an object', done => {
       const input = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
-
-      // done();
+      const expectedPuzzle = {
+                              "A": [".", ".", "9", ".", ".", "5", ".", "1", "."],
+                              "B": ["8", "5", ".", "4", ".", ".", ".", ".", "2"],
+                              "C": ["4", "3", "2", ".", ".", ".", ".", ".", "."],
+                              "D": ["1", ".", ".", ".", "6", "9", ".", "8", "3"],
+                              "E": [".", "9", ".", ".", ".", ".", ".", "6", "."],
+                              "F": ["6", "2", ".", "7", "1", ".", ".", ".", "9"],
+                              "G": [".", ".", ".", ".", ".", ".", "1", "9", "4"],
+                              "H": ["5", ".", ".", ".", ".", "4", ".", "3", "7"],
+                              "I": [".", "4", ".", "3", ".", ".", "6", ".", "."]
+                              };
+      assert.deepEqual(Solver.crearNuevoPuzzle(input), expectedPuzzle);
+      done();
     });
 
     // Puzzles that are not 81 numbers/periods long show the message
