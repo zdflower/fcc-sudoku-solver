@@ -15,11 +15,13 @@ try {
   module.exports = {
 
     isNumberBetweenOneAndNine: (cellContent) => {
-      // cellContent is String, ideally, a one character length string representing a number betwen 1 and 9.
+      // cellContent is String, ideally, a one character length string representing a number betwen
+      // 1 and 9.
       // Returns true if cellContent can be casted to a number and that number is in [1 .. 9] range
       // Returns false otherwise.
       // Reflections:
-      // Maybe it should check that the number is integer? That depends on cellContent, if it is just a character, then the number can't have decimal part other than 0.
+      // Maybe it should check that the number is integer? That depends on cellContent, if it is
+      // just a character, then the number can't have decimal part other than 0.
 
       try {
         const number = Number(cellContent);
