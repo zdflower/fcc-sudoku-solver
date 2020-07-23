@@ -40,7 +40,7 @@ try {
       // input es String.
       // input es una cadena de 81 caracteres, válida para un puzzle sudoku.
       // Devuelve un objeto con filas del tablero.
-      const filas = obtenerFilasHelper(input); // IMPLEMENTAR
+      const filas = obtenerFilasHelper(input);
       const puzzle = {};
       try {
         LETRAS_FILAS.forEach((key, i) => {
