@@ -31,5 +31,33 @@ try {
         return false;
       }
     },
-  }
+    crearNuevoPuzzle: (input) => {
+      // input es String.
+      // input es una cadena de 81 caracteres, válida para un puzzle sudoku.
+      // Devuelve un objeto con filas del tablero.
+      return {}; // IMPLEMENTAR
+    }
+
+  };
 } catch (e) {}
+
+/*
+COMENTARIOS
+
+En referencia al resultado de << crearNuevoPuzzle >>:
+
+No sé qué tipo de objeto sería.
+
+En el viewer se nombran las filas desde A hasta I.
+
+>>>> PERO ¡OJO! que las columnas las numera desde 1 y no desde 0. <<<<
+
+Para generar ese objeto, tal vez tendría que escribir una clase, y para las filas utilizar split.
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split
+
+Para obtener un array con los caracteres de una cadena: cadena.split('')
+
+*/
