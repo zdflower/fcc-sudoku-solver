@@ -35,3 +35,7 @@ Based on this boilerplate: <https://github.com/freeCodeCamp/boilerplate-project-
 foreach:
 
 <https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/forEach>
+
+testear dos objetos
+
+<https://www.chaijs.com/api/assert/#method_deepequal>
