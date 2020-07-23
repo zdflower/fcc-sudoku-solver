@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
   Note: The `try` block is to prevent errors on
   the client side
 */
+
+const LETRAS_FILAS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+
+const { obtenerFilasHelper } = require('../helpers');
+
 try {
   module.exports = {
 
@@ -35,7 +40,18 @@ try {
       // input es String.
       // input es una cadena de 81 caracteres, válida para un puzzle sudoku.
       // Devuelve un objeto con filas del tablero.
-      return {}; // IMPLEMENTAR
+      const filas = obtenerFilasHelper(input); // IMPLEMENTAR
+      const puzzle = {};
+      try {
+        LETRAS_FILAS.forEach((key, i) => {
+          puzzle[key] = filas[i];
+        // acá puede haber un error si filas no tiene la misma longitud que LETRAS_FILAS
+        // me parece que no da error si no que simplemente le asigna undefined a cada clave.
+        });
+      } catch (error) {
+        console.error(error);
+      }
+      return puzzle;
     }
 
   };

@@ -15,6 +15,10 @@ const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 let Solver;
 
+// helper
+const { obtenerFilasHelper } = require('../helpers');
+//
+
 suite('UnitTests', () => {
   suiteSetup(() => {
     // Mock the DOM for testing and load Solver
@@ -49,6 +53,20 @@ suite('UnitTests', () => {
     });
   });
 
+  /* testeo una función helper */
+
+  suite('Function obtenerFilasHelper()', () => {
+    test('Produce un array de arrays con las filas del puzzle', done => {
+      const input = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
+      assert.isArray(obtenerFilasHelper(input));
+      assert.lengthOf(obtenerFilasHelper(input), 9, 'Hay 9 filas');
+      assert.lengthOf(obtenerFilasHelper(input)[0], 9, 'Cada fila tiene 9 columnas');
+      // este va a dar error cuando el anterior no es verdadero, porque se pretende acceder a
+      // una posición del array que tal vez no existe si obtenerFilasHelper(input) está vacío.
+      done();
+    });
+  });
+
   suite('Function crearNuevoPuzzle()', () => {
     test('Parses a valid puzzle string into an object', done => {
       const input = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
@@ -63,6 +81,7 @@ suite('UnitTests', () => {
                               "H": ["5", ".", ".", ".", ".", "4", ".", "3", "7"],
                               "I": [".", "4", ".", "3", ".", ".", "6", ".", "."]
                               };
+
       assert.deepEqual(Solver.crearNuevoPuzzle(input), expectedPuzzle);
       done();
     });
