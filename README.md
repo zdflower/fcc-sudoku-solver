@@ -28,3 +28,10 @@ Based on this boilerplate: <https://github.com/freeCodeCamp/boilerplate-project-
 * To run the tests in the console, use the command `npm run test`. To open the Glitch console, first click "Tools" in the bottom left corner and then click "Terminal".
 * All logic can go into `public/sudoku-solver.js`.
 * Create all of the unit/functional tests in `tests/1_unit-tests.js` and `tests/2_functional-tests.js`.
+
+
+### Mis apuntes
+
+foreach:
+
+<https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/forEach>
