@@ -39,3 +39,50 @@ foreach:
 testear dos objetos
 
 <https://www.chaijs.com/api/assert/#method_deepequal>
+
+Client side javascript
+
+DOM (Document Object Model)
+
+https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Manipulating_documents
+
+https://www.digitalocean.com/community/tutorials/introduction-to-the-dom
+
+https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model
+
+https://developer.mozilla.org/en-US/docs/Web/Events
+
+https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event
+
+https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event
+
+https://eloquentjavascript.net/15_event.html
+
+https://eloquentjavascript.net/18_http.html#forms
+
+Client side form data validation
+https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation
+
+https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_and_retrieving_form_data
+
+Tools for developing
+
+https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Understanding_client-side_tools/Introducing_complete_toolchain
+
+https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing
+
+https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/JavaScript
+
+More stuff to read and learn, testing, etc.
+
+https://krasimirtsonev.com/blog/article/unit-test-your-client-side-javascript-jsdom-nodejs
+
+https://pauleveritt.github.io/posts/pylyglot/mocha
+
+https://pauleveritt.github.io/posts/pylyglot/jsdom
+
+how to mock window/document with mocha/chai - stack overflow https://stackoverflow.com/questions/36500723/how-to-mock-window-document-with-mocha-chai
+
+A journey through client-side testing with javascript https://www.telerik.com/blogs/journey-client-side-testing-javascript
+
+
