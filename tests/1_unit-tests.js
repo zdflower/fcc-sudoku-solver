@@ -16,7 +16,7 @@ const { JSDOM } = jsdom;
 let Solver;
 
 // helper
-const { obtenerFilasHelper } = require('../helpers');
+const { obtenerFilasHelper, isInputOk } = require('../helpers');
 //
 
 suite('UnitTests', () => {
@@ -53,20 +53,6 @@ suite('UnitTests', () => {
     });
   });
 
-  /* testeo una función helper */
-
-  suite('Function obtenerFilasHelper()', () => {
-    test('Produce un array de arrays con las filas del puzzle', done => {
-      const input = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
-      assert.isArray(obtenerFilasHelper(input));
-      assert.lengthOf(obtenerFilasHelper(input), 9, 'Hay 9 filas');
-      assert.lengthOf(obtenerFilasHelper(input)[0], 9, 'Cada fila tiene 9 columnas');
-      // este va a dar error cuando el anterior no es verdadero, porque se pretende acceder a
-      // una posición del array que tal vez no existe si obtenerFilasHelper(input) está vacío.
-      done();
-    });
-  });
-
   suite('Function crearNuevoPuzzle()', () => {
     test('Parses a valid puzzle string into an object', done => {
       const input = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
@@ -95,7 +81,12 @@ suite('UnitTests', () => {
       const errorMsg = 'Error: Expected puzzle to be 81 characters long.';
       const errorDiv = document.getElementById('error-msg');
 
-      // done();
+      Solver.crearNuevoPuzzle(shortStr);
+      assert.equal(errorDiv.textContent, errorMsg);
+
+      Solver.crearNuevoPuzzle(longStr);
+      assert.equal(errorDiv.textContent, errorMsg);
+      done();
     });
   });
 
@@ -115,7 +106,6 @@ suite('UnitTests', () => {
     });
   });
 
-
   suite('Function ____()', () => {
     // Returns the expected solution for a valid, incomplete puzzle
     test('Returns the expected solution for an incomplete puzzle', done => {
@@ -124,4 +114,66 @@ suite('UnitTests', () => {
       // done();
     });
   });
+
+  /* Testeo funciones helper */
+
+  suite('Function obtenerFilasHelper()', () => {
+    test('Produce un array de arrays con las filas del puzzle', done => {
+      const input = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
+      assert.isArray(obtenerFilasHelper(input));
+      assert.lengthOf(obtenerFilasHelper(input), 9, 'Hay 9 filas');
+      assert.lengthOf(obtenerFilasHelper(input)[0], 9, 'Cada fila tiene 9 columnas');
+      // este va a dar error cuando el anterior no es verdadero, porque se pretende acceder a
+      // una posición del array que tal vez no existe si obtenerFilasHelper(input) está vacío.
+      done();
+    });
+  });
+
+  suite('Function isInputOk()', () => {
+    test('Devuelve true para un input válido de 81 caracteres', done => {
+      const input = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
+      assert.isOk(isInputOk(input));
+      done();
+    });
+  });
+
 });
+
+/*
+
+COMENTARIOS
+
+1) sobre  test('Shows an error for puzzles that are not 81 numbers long'):
+
+    const errorDiv = document.getElementById('error-msg'); // esto me confunde acerca de lo que
+      // debe hacer la función que estoy testeando
+      // porque parece implicar que tiene que modificar este div?
+
+      // en algún momento habrá que agregar event listeners?
+
+      // ¿no tendría que ir en la parte de test funcional?
+      // ¿?
+
+      // ¿o tendría que ser otra función aparte de crearNuevoPuzzle que muestre el mensaje de error?
+
+      // ¿Tendrías que primero llamar a Solver.crearNuevoPuzzle(shortStr)
+      // suponiendo que ahora crearNuevoPuzzle también actualiza el view?
+      // y después ver si en errorDiv está errorMsg?
+      // assert.equals(Solver.crearNuevoPuzzle(shortStr), errorMsg)
+      // done();
+
+      // Voy a escribir un test, sin importarme la manipulación del dom, voy viendo
+      // si no no avanzo para nada y no tiene sentido.
+
+      // o tal vez hacer eso que dije antes, de que crearNuevoPuzzle use una función que modifique
+      // el error div, entonces primero llamo a crearNuevoPuzzle y después comparo el contenido
+      // de errordiv con errormsg
+
+      // Hay algo que no me cierra, que no veo, lo que yo veo es que por un lado tendría que estar
+      // este crearNuevoPuzzle y por otro lado la función que testea si el input es válido,
+      // que en todo caso la usaría crearNuevoPuzzle antes de hacer su trabajo, no sé.
+      // porque si no no estarías haciendo un test unitario.
+      // no entiendo esta suit de test, se supone que una suit es un conjunto de tests para una
+      // misma función, acá parecieran testearse distintas funciones o una función que hace
+      // distintas cosas, lo cual no es tan unitario...
+*/
