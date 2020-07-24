@@ -1,5 +1,7 @@
 const LONGITUD_FILA = 9;
 
+const LONGITUD_PUZZLE = 81;
+
 exports.obtenerFilasHelper = str => {
   // str es String.
   // str representa un puzzle sudoku válido.
@@ -16,4 +18,15 @@ exports.obtenerFilasHelper = str => {
     filas.push(substr.split(''));
   }
   return filas;
+};
+
+exports.mostrarErrorMsg = (msg) => {
+  const errorDiv = document.getElementById('error-msg');
+  errorDiv.textContent = msg;
+};
+
+exports.isInputOk = (str) => {
+  // Devuelve true si la longitud de str es LONGITUD_PUZZLE
+  return str.length === LONGITUD_PUZZLE;
+  // return !(str.length < LONGITUD_PUZZLE || str.length > LONGITUD_PUZZLE);
 };
