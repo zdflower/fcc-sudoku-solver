@@ -85,4 +85,20 @@ how to mock window/document with mocha/chai - stack overflow https://stackoverfl
 
 A journey through client-side testing with javascript https://www.telerik.com/blogs/journey-client-side-testing-javascript
 
+Problems with javascript syntax and the browser
 
+https://forum.freecodecamp.org/t/reference-error-require-is-not-defined/319190/11
+
+http://browserify.org/
+
+https://github.com/requirejs/requirejs
+
+https://stackoverflow.com/questions/24412124/referenceerror-require-is-not-defined
+
+Quise tener el código más organizado y separado en archivos pero para que funcione en el navegador tendría que instalar algo para que transforme el código que el navegador no interpreta, por ejemplo los require. Algo como browserify o require.js
+
+Me apareció este problema cuando quise agregar un eventlistener para el evento input de textarea y cuando ubiqué el código en sudoku-solver.js después de module.exports no llegó a funcionar porque al comienzo hay un require para funciones helper que se usan en funciones definidas dentro del module.exports y salta error en el navegador y se ve que no sigue leyendo el código. Y como el event handler va a usar una de las funciones de module.exports si lo ubico antes no la encuentra.
+
+Otra cosa:
+
+No me queda claro cómo funciona o cómo se supone que debe funcionar la aplicación. Trato de usar la app de ejemplo que provee freecodecamp y pareciera que la única manera de ingresar un puzzle en el tablero es escribiendo de a uno los números en las celdas y no pegando o escribiendo los números y puntos en el textarea, como supuse desde un principio. Lo que sí sucede es que una vez que vas llenando las celdas, el textarea se va actualizando.
