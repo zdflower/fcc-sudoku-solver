@@ -7,6 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /*
+// ¿Dónde pongo la función inicializarTablero? Me gustaría poder testearla.
+// Si la pongo en module.exports, cómo la uso acá abajo en el eventlistener para change?
+
+const inicializarTablero = (event) => {
+  console.log(event.target.value);
+  module.exports.crearNuevoPuzzle(event.target.value);
+};
+
+// quiero agregar un event listener para cuando hay un cambio en textArea
+// se ejecute crearNuevoPuzzle
+textArea.addEventListener('input', inicializarTablero);
+*/
+
+/*
   Export your functions for testing in Node.
   Note: The `try` block is to prevent errors on
   the client side
