@@ -25,6 +25,7 @@ exports.mostrarErrorMsg = (msg) => {
   errorDiv.textContent = msg;
 };
 
+// Tal vez habría que validar y sanitizar en algún lugar el input.
 exports.isInputOk = (str) => {
   // Devuelve true si la longitud de str es LONGITUD_PUZZLE
   return str.length === LONGITUD_PUZZLE;
