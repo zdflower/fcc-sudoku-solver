@@ -16,7 +16,7 @@ const { JSDOM } = jsdom;
 let Solver;
 
 // helper
-const { obtenerFilasHelper, isInputOk } = require('../helpers');
+const { obtenerFilasHelper, isInputOk, obtenerUnBloque } = require('../helpers');
 //
 
 suite('UnitTests', () => {
@@ -137,6 +137,24 @@ suite('UnitTests', () => {
     });
   });
 
+  suite('Function obtenerUnBloque()', () => {
+    test('Obtiene un bloque que comienza en celda_i y termina en celda_f', done => {
+      const grilla = [        [".", ".", "9", ".", ".", "5", ".", "1", "."],
+                              ["8", "5", ".", "4", ".", ".", ".", ".", "2"],
+                              ["4", "3", "2", ".", ".", ".", ".", ".", "."],
+                              ["1", ".", ".", ".", "6", "9", ".", "8", "3"],
+                              [".", "9", ".", ".", ".", ".", ".", "6", "."],
+                              ["6", "2", ".", "7", "1", ".", ".", ".", "9"],
+                              [".", ".", ".", ".", ".", ".", "1", "9", "4"],
+                              ["5", ".", ".", ".", ".", "4", ".", "3", "7"],
+                              [".", "4", ".", "3", ".", ".", "6", ".", "."]];
+      const inicio = [3, 0];
+      const fin = [5, 2];
+      const expected = ["1", ".", ".", ".", "9", ".", "6", "2", "."];
+      assert.deepEqual(obtenerUnBloque(inicio, fin, grilla), expected);
+      done();
+    });
+  });
 });
 
 /*
