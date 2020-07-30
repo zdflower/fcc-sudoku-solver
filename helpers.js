@@ -3,14 +3,14 @@ const LONGITUD_FILA = 9;
 const LONGITUD_PUZZLE = 81;
 
 const INICIO_FIN_BLOQUES = [ [[0,0], [2,2]],
-	                     [(0,3), (2,5)],
-	                     [(0,6), (2,8)],
-                             [(3,0), (5,2)],
-	                     [(3,3), (5,5)],
-	                     [(3,6), (5,8)],
-	                     [(6,0), (8,2)],
-	                     [(6,3), (8,5)],
-	                     [(6,6), (8,8)]
+	                     [[0,3], [2,5]],
+	                     [[0,6], [2,8]],
+                             [[3,0], [5,2]],
+	                     [[3,3], [5,5]],
+	                     [[3,6], [5,8]],
+	                     [[6,0], [8,2]],
+	                     [[6,3], [8,5]],
+	                     [[6,6], [8,8]]
                            ]; // el primer par de cada subarray contiene fila y columna de la celda inicial del bloque, arriba a la izquierda
                               // el segundo par contiene fila y columna de la celda final, abajo a la derecha.
 
@@ -32,18 +32,6 @@ exports.obtenerFilasHelper = str => {
   return filas;
 };
 
-exports.obtenerBloques = grilla => {
-  // grilla es un array que representa la grilla, donde cada celda es fila,columna
-  // para cada bloque en inicio_fin_bloques
-  // recorrés grilla desde bloque[0][0] hasta bloque[1][0], es decir desde fila inicio hasta fila final
-  // y para cada fila recorrés las columnas desde inicio hasta final: bloque[0][1] hasta bloque[1][1]
-
-  // para cada inicio_fin_bloque obtener un bloque
-  const bloques = [];
-  INICIO_FIN_BLOQUES.forEach((bloque) => bloques.push(obtenerUnBloque(bloque[0], bloque[1], grilla)));
-  return bloques;
-};
-
 exports.obtenerUnBloque = (celda_inicio, celda_final, grilla) => {
   const bloque = [];
   const fila_inicial = celda_inicio[0];
@@ -56,6 +44,18 @@ exports.obtenerUnBloque = (celda_inicio, celda_final, grilla) => {
     }
   }
   return bloque;
+};
+
+exports.obtenerBloques = grilla => {
+  // grilla es un array que representa la grilla, donde cada celda es fila,columna
+  // para cada bloque en inicio_fin_bloques
+  // recorrés grilla desde bloque[0][0] hasta bloque[1][0], es decir desde fila inicio hasta fila final
+  // y para cada fila recorrés las columnas desde inicio hasta final: bloque[0][1] hasta bloque[1][1]
+
+  // para cada inicio_fin_bloque obtener un bloque
+  const bloques = [];
+  INICIO_FIN_BLOQUES.forEach((bloque) => bloques.push(exports.obtenerUnBloque(bloque[0], bloque[1], grilla)));
+  return bloques;
 };
 
 exports.obtenerColumnas = grilla => {
