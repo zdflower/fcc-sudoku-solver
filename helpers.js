@@ -58,15 +58,20 @@ exports.obtenerBloques = grilla => {
   return bloques;
 };
 
+exports.obtenerUnaColumna = (col, grilla) => {
+  const columna = [];
+  const total_filas = grilla.length;
+  for (let fila = 0; fila < total_filas; fila++){
+    columna.push(grilla[fila][col]);
+  }
+  return columna;
+}
+
 exports.obtenerColumnas = grilla => {
   const columnas = [];
   const total_columnas = grilla[0].length; // la grilla es un array de filas, la grilla es cuadrada, la longitud de la primera fila es la cantidad de columnas.
-  const total_filas = grilla.length;
   for (let col = 0; col < total_columnas; col++){
-    const columna = [];
-    for (let fila = 0; fila < total_filas; fila++){
-      columna.push(grilla[fila][columna]);
-    }
+    const columna = exports.obtenerUnaColumna(col, grilla);
     columnas.push(columna);
   }
   return columnas;

@@ -16,7 +16,7 @@ const { JSDOM } = jsdom;
 let Solver;
 
 // helper
-const { obtenerFilasHelper, isInputOk, obtenerUnBloque, obtenerBloques } = require('../helpers');
+const { obtenerFilasHelper, isInputOk, obtenerUnBloque, obtenerBloques, obtenerColumnas } = require('../helpers');
 //
 
 suite('UnitTests', () => {
@@ -181,6 +181,35 @@ suite('UnitTests', () => {
                         ["1", "9", "4", ".", "3", "7", "6", ".", "."]
                        ];
       assert.deepEqual(obtenerBloques(grilla), expected);
+      done();
+    });
+  });
+
+  suite("Función obtenerColumnas", () => {
+    test('Obtiene todas las columnas de la grilla', done => {
+       const grilla = [        [".", ".", "9", ".", ".", "5", ".", "1", "."],
+                              ["8", "5", ".", "4", ".", ".", ".", ".", "2"],
+                              ["4", "3", "2", ".", ".", ".", ".", ".", "."],
+
+                              ["1", ".", ".", ".", "6", "9", ".", "8", "3"],
+                              [".", "9", ".", ".", ".", ".", ".", "6", "."],
+                              ["6", "2", ".", "7", "1", ".", ".", ".", "9"],
+
+                              [".", ".", ".", ".", ".", ".", "1", "9", "4"],
+                              ["5", ".", ".", ".", ".", "4", ".", "3", "7"],
+                              [".", "4", ".", "3", ".", ".", "6", ".", "."]];
+      const expectedCols = [[".", "8", "4", "1", ".", "6", ".", "5", "."],
+                        [".", "5", "3", ".", "9", "2", ".", ".", "4"],
+                        ["9", ".", "2", ".", ".", ".", ".", ".", "."],
+                        [".", "4", ".", ".", ".", "7", ".", ".", "3"],
+                        [".", ".", ".", "6", ".", "1", ".", ".", "."],
+                        ["5", ".", ".", "9", ".", ".", ".", "4", "."],
+                        [".", ".", ".", ".", ".", ".", "1", ".", "6"],
+                        ["1", ".", ".", "8", "6", ".", "9", "3", "."],
+                        [".", "2", ".", "3", ".", "9", "4", "7", "."]
+                       ];
+      const columnas = obtenerColumnas(grilla);
+      assert.deepEqual(columnas, expectedCols);
       done();
     });
   });
