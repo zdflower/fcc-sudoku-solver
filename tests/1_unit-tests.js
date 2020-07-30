@@ -16,7 +16,7 @@ const { JSDOM } = jsdom;
 let Solver;
 
 // helper
-const { obtenerFilasHelper, isInputOk, obtenerUnBloque, obtenerBloques, obtenerColumnas } = require('../helpers');
+const { obtenerFilasHelper, isInputOk, obtenerUnBloque, obtenerBloques, obtenerColumnas, estaCompletoYSinRepetidos } = require('../helpers');
 //
 
 suite('UnitTests', () => {
@@ -136,6 +136,34 @@ suite('UnitTests', () => {
       done();
     });
   });
+
+  suite('Función estaCompletoYSinRepetidos', () => {
+          test('Reconoce que un array está completo y sin repetidos', done => {
+            const input = ["1", "5", "7", "3", "9", "4", "6", "2", "8"];
+            assert.isOk(estaCompletoYSinRepetidos(input));
+            done();
+          });
+
+          test('Reconoce que un array NO está completo', done => {
+            const input = ["1", ".", ".", ".", "9", ".", "6", "2", "."];
+            assert.isNotOk(estaCompletoYSinRepetidos(input));
+            done();
+          });
+
+          test('Reconoce que un array NO está completo y TIENE repetidos', done => {
+            const input = ["1", "9", "4", "3", "9", ".", "6", "2", "."];
+            assert.isNotOk(estaCompletoYSinRepetidos(input));
+            done();
+          });
+
+          test('Reconoce que un array TIENE repetidos', done => {
+            const input = ["1", "9", "5", "3", "7", "8", "6", "2", "5"];
+            assert.isNotOk(estaCompletoYSinRepetidos(input));
+            done();
+          });
+
+  });
+
 
   suite('Function obtenerUnBloque()', () => {
     test('Obtiene un bloque que comienza en celda_i y termina en celda_f', done => {

@@ -79,7 +79,7 @@ exports.obtenerColumnas = grilla => {
 
 exports.estaCompletoYSinRepetidos = arr => {
   // Acá podría chequear que la longitud de arr sea 9 y que en arr esté el 1, el 2, el 3, ..., el 9.
-  return arr.length === 9 && [1, 2, 3, 4, 5, 6, 7, 8, 9].every(n => arr.includes(n));
+  return arr.length === 9 && ["1", "2", "3", "4", "5", "6", "7", "8", "9"].every(n => arr.includes(n));
 };
 
 exports.estanFilasCompletasSinRepetidos = filas => {
