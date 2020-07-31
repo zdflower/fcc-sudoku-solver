@@ -1,3 +1,5 @@
+/* grilla = una lista de filas producto de obtenerFilasHelper */
+
 const LONGITUD_FILA = 9;
 
 const LONGITUD_PUZZLE = 81;
@@ -84,7 +86,8 @@ exports.estaCompletoYSinRepetidos = arr => {
 
 exports.estanTodosCompletosSinRepetidos = puzzle => {
   // puzzle es un array de arrays, que pueden ser filas, columnas o bloques
-  return sectores.every(arr => exports.estaCompletoYSinRepetidos(arr));
+  // Chequea si el puzzle está resuelto. Devuelve true si la grilla está completa sin repetidos.
+  return puzzle.every(arr => exports.estaCompletoYSinRepetidos(arr));
 };
 
 exports.mostrarErrorMsg = (msg) => {
