@@ -16,7 +16,7 @@ const { JSDOM } = jsdom;
 let Solver;
 
 // helper
-const { obtenerFilasHelper, isInputOk, obtenerUnBloque, obtenerBloques, obtenerColumnas, estaCompletoYSinRepetidos } = require('../helpers');
+const { obtenerFilasHelper, isInputOk, obtenerUnBloque, obtenerBloques, obtenerColumnas, estaCompletoYSinRepetidos, estanTodosCompletosSinRepetidos } = require('../helpers');
 //
 
 suite('UnitTests', () => {

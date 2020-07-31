@@ -82,10 +82,9 @@ exports.estaCompletoYSinRepetidos = arr => {
   return arr.length === 9 && ["1", "2", "3", "4", "5", "6", "7", "8", "9"].every(n => arr.includes(n));
 };
 
-exports.estanFilasCompletasSinRepetidos = filas => {
-  // Podría usar una suerte de reduce que condense un AND del resultado de aplicar a cada fila una
-  // función estáCompletoYSinRepetidos(array)
-  return filas.every(fila => exports.estaCompletoYSinRepetidos(fila));
+exports.estanTodosCompletosSinRepetidos = sectores => {
+  // sectores es un array de arrays, que pueden ser filas, columnas o bloques
+  return sectores.every(arr => exports.estaCompletoYSinRepetidos(arr));
 };
 
 exports.mostrarErrorMsg = (msg) => {
