@@ -164,6 +164,14 @@ suite('UnitTests', () => {
 
   });
 
+suite('Función estánTodosCompletosYSinRepetidos', () => {
+  test('Reconoce que el puzzle está completo y sin repetidos', done => {
+    const input = '769235418851496372432178956174569283395842761628713549283657194516924837947381625';
+    const puzzle = obtenerFilasHelper(input);
+    assert.isOk(estanTodosCompletosSinRepetidos(puzzle));
+    done();
+  });
+});
 
   suite('Function obtenerUnBloque()', () => {
     test('Obtiene un bloque que comienza en celda_i y termina en celda_f', done => {
