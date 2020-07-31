@@ -102,8 +102,9 @@ suite('UnitTests', () => {
     // Invalid complete puzzles fail
     test('Invalid puzzles fail', done => {
       const input = '779235418851496372432178956174569283395842761628713549283657194516924837947381625';
-
-      // done();
+      const puzzle = obtenerFilasHelper(input);
+      assert.isNotOk(estanTodosCompletosSinRepetidos(puzzle));
+      done();
     });
   });
 
