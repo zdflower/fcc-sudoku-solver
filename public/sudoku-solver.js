@@ -72,7 +72,11 @@ try {
         mostrarErrorMsg(INPUT_ERROR_MSG);
       }
       return puzzle;
-    }
+    },
+   solveSudoku: (input) => {
+     let solution = '';
+     // TO DO: Completar.
+     return solution;
   }; // fin module.exports
 } catch (e) {}
 
