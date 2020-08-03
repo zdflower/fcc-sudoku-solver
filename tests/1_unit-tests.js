@@ -113,7 +113,7 @@ suite('UnitTests', () => {
     test('Returns the expected solution for an incomplete puzzle', done => {
       const input = '..839.7.575.....964..1.......16.29846.9.312.7..754.....62..5.78.8...3.2...492...1';
       const solution = '218396745753284196496157832531672984649831257827549613962415378185763429374928561'
-      assert.isEqual(solveSudoku(input), solution); 
+      assert.isEqual(Solver.solveSudoku(input), solution); 
       done();
     });
   });
