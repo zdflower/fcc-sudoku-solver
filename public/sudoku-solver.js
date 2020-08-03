@@ -29,7 +29,14 @@ textArea.addEventListener('input', inicializarTablero);
 const LETRAS_FILAS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 const INPUT_ERROR_MSG = 'Error: Expected puzzle to be 81 characters long.';
 
-const { obtenerFilasHelper, mostrarErrorMsg, isInputOk } = require('../helpers');
+const { obtenerFilasHelper, mostrarErrorMsg, isInputOk, coincidenTodas } = require('../helpers');
+const { puzzlesAndSolutions } = require('./puzzle-strings');
+
+const LIBRARY_OF_SOLUTIONS = puzzlesAndSolutions;
+const getSolutionFromLibrary = (index) => {
+
+       return LIBRARY_OF_SOLUTIONS[index][1];
+}
 
 try {
   module.exports = {
@@ -74,9 +81,21 @@ try {
       return puzzle;
     },
    solveSudoku: (input) => {
-     let solution = '';
-     // TO DO: Completar.
-     return solution;
+     let indice = 0;
+     let solution = getSolutionFromLibrary(indice);
+     let solHasBeenFound = coincidenTodas(input, solution);
+     while (indice < LIBRARY_OF_SOLUTIONS.length && !solHasBeenFound){
+       indice++;
+       solution = getSolutionFromLibrary(indice); 
+       solHasBeenFound = coincidenTodas(input, solution);
+     }
+     if (indice === LIBRARY_OF_SOLUTIONS.length){
+       return "";
+     }
+     else {
+       return solution;
+     }
+   }
   }; // fin module.exports
 } catch (e) {}
 

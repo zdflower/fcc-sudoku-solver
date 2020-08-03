@@ -101,3 +101,15 @@ exports.isInputOk = (str) => {
   return str.length === LONGITUD_PUZZLE;
   // return !(str.length < LONGITUD_PUZZLE || str.length > LONGITUD_PUZZLE);
 };
+
+exports.coincidenTodas = (puzzle_a, puzzle_b) => {
+  // acá estoy mezclando, every es método de array y el input está en string
+  const puzzle_a_arr = puzzle_a.split('');
+  const puzzle_b_arr = puzzle_b.split('');
+  return  puzzle_a_arr.every((celda, index) => {
+    if (celda === '.') return true;
+    else {
+      return celda === puzzle_b_arr[index];
+    }
+  });
+}

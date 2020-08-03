@@ -16,7 +16,7 @@ const { JSDOM } = jsdom;
 let Solver;
 
 // helper
-const { obtenerFilasHelper, isInputOk, obtenerUnBloque, obtenerBloques, obtenerColumnas, estaCompletoYSinRepetidos, estanTodosCompletosSinRepetidos } = require('../helpers');
+const { obtenerFilasHelper, isInputOk, obtenerUnBloque, obtenerBloques, obtenerColumnas, estaCompletoYSinRepetidos, estanTodosCompletosSinRepetidos, coincidenTodas } = require('../helpers');
 //
 
 suite('UnitTests', () => {
@@ -108,12 +108,12 @@ suite('UnitTests', () => {
     });
   });
 
-  suite('Function ____()', () => {
+  suite('Function solveSudoku()', () => {
     // Returns the expected solution for a valid, incomplete puzzle
     test('Returns the expected solution for an incomplete puzzle', done => {
       const input = '..839.7.575.....964..1.......16.29846.9.312.7..754.....62..5.78.8...3.2...492...1';
       const solution = '218396745753284196496157832531672984649831257827549613962415378185763429374928561'
-      assert.isEqual(Solver.solveSudoku(input), solution); 
+      assert.equal(Solver.solveSudoku(input), solution); 
       done();
     });
   });
@@ -223,6 +223,14 @@ suite('Función estánTodosCompletosYSinRepetidos', () => {
       done();
     });
   });
+suite("Función helper coincidenTodas", () => {
+  test('Devuelve true si todas las celdas no vacías del puzzle coinciden con las correspondientes de otro puzzle', done => {
+   const puzzle = '1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
+    const solucion = '135762984946381257728459613694517832812936745357824196473298561581673429269145378';
+    assert.isOk(coincidenTodas(puzzle, solucion));
+    done();
+  });
+});
 
   suite("Función obtenerColumnas", () => {
     test('Obtiene todas las columnas de la grilla', done => {
