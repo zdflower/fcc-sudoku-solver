@@ -1,24 +1,9 @@
 const textArea = document.getElementById('text-input');
-// import { puzzlesAndSolutions } from './puzzle-strings.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Load a simple puzzle into the text area
   textArea.value = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
 });
-
-/*
-// ¿Dónde pongo la función inicializarTablero? Me gustaría poder testearla.
-// Si la pongo en module.exports, cómo la uso acá abajo en el eventlistener para change?
-
-const inicializarTablero = (event) => {
-  console.log(event.target.value);
-  module.exports.crearNuevoPuzzle(event.target.value);
-};
-
-// quiero agregar un event listener para cuando hay un cambio en textArea
-// se ejecute crearNuevoPuzzle
-textArea.addEventListener('input', inicializarTablero);
-*/
 
 /*
   Export your functions for testing in Node.
@@ -34,14 +19,10 @@ const { puzzlesAndSolutions } = require('./puzzle-strings');
 
 const LIBRARY_OF_SOLUTIONS = puzzlesAndSolutions;
 const getSolutionFromLibrary = (index) => {
-
-       return LIBRARY_OF_SOLUTIONS[index][1];
+  return LIBRARY_OF_SOLUTIONS[index][1];
 }
 
-try {
-  module.exports = {
-
-    isNumberBetweenOneAndNine: (cellContent) => {
+const isNumberBetweenOneAndNine = (cellContent) => {
       // cellContent is String, ideally, a one character length string representing a number betwen
       // 1 and 9.
       // Returns true if cellContent can be casted to a number and that number is in [1 .. 9] range
@@ -57,8 +38,9 @@ try {
         console.error(error);
         return false;
       }
-    },
-    crearNuevoPuzzle: (input) => {
+    };
+
+const crearNuevoPuzzle = (input) => {
       // input es String.
       // input es una cadena de 81 caracteres, válida para un puzzle sudoku.
       // Devuelve un objeto con filas del tablero.
@@ -79,8 +61,9 @@ try {
         mostrarErrorMsg(INPUT_ERROR_MSG);
       }
       return puzzle;
-    },
-   solveSudoku: (input) => {
+    };
+
+const solveSudoku = (input) => {
      let indice = 0;
      let solution = getSolutionFromLibrary(indice);
      let solHasBeenFound = coincidenTodas(input, solution);
@@ -95,8 +78,25 @@ try {
      else {
        return solution;
      }
-   }
-  }; // fin module.exports
+   };
+
+/*
+const inicializarTablero = (event) => {
+  console.log(event.target.value);
+  crearNuevoPuzzle(event.target.value);
+};
+
+// quiero agregar un event listener para cuando hay un cambio en textArea
+// se ejecute crearNuevoPuzzle
+textArea.addEventListener('input', inicializarTablero);
+*/
+
+try {
+  module.exports = {
+    isNumberBetweenOneAndNine,
+    crearNuevoPuzzle,
+    solveSudoku 
+  };
 } catch (e) {}
 
 /*
