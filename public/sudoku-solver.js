@@ -37,7 +37,7 @@ const INICIO_FIN_BLOQUES = [ [[0,0], [2,2]],
                            ]; // el primer par de cada subarray contiene fila y columna de la celda inicial del bloque, arriba a la izquierda
                               // el segundo par contiene fila y columna de la celda final, abajo a la derecha.
 
-const obtenerFilasHelper = str => {
+function obtenerFilasHelper(str){
   // str es String.
   // str representa un puzzle sudoku válido.
   // Tiene una longitud de 81 caracteres.
@@ -53,9 +53,9 @@ const obtenerFilasHelper = str => {
     filas.push(substr.split(''));
   }
   return filas;
-};
+}
 
-const obtenerUnBloque = (celda_inicio, celda_final, grilla) => {
+function obtenerUnBloque(celda_inicio, celda_final, grilla) {
   const bloque = [];
   const fila_inicial = celda_inicio[0];
   const fila_final = celda_final[0];
@@ -67,9 +67,9 @@ const obtenerUnBloque = (celda_inicio, celda_final, grilla) => {
     }
   }
   return bloque;
-};
+}
 
-const obtenerBloques = grilla => {
+function obtenerBloques(grilla) {
   // grilla es un array que representa la grilla, donde cada celda es fila,columna
   // para cada bloque en inicio_fin_bloques
   // recorrés grilla desde bloque[0][0] hasta bloque[1][0], es decir desde fila inicio hasta fila final
@@ -79,9 +79,9 @@ const obtenerBloques = grilla => {
   const bloques = [];
   INICIO_FIN_BLOQUES.forEach((bloque) => bloques.push(obtenerUnBloque(bloque[0], bloque[1], grilla)));
   return bloques;
-};
+}
 
-const obtenerUnaColumna = (col, grilla) => {
+function obtenerUnaColumna(col, grilla){
   const columna = [];
   const total_filas = grilla.length;
   for (let fila = 0; fila < total_filas; fila++){
@@ -90,7 +90,7 @@ const obtenerUnaColumna = (col, grilla) => {
   return columna;
 }
 
-const obtenerColumnas = grilla => {
+function obtenerColumnas(grilla) {
   const columnas = [];
   const total_columnas = grilla[0].length; // la grilla es un array de filas, la grilla es cuadrada, la longitud de la primera fila es la cantidad de columnas.
   for (let col = 0; col < total_columnas; col++){
@@ -98,34 +98,32 @@ const obtenerColumnas = grilla => {
     columnas.push(columna);
   }
   return columnas;
-};
+}
 
-const estaCompletoYSinRepetidos = arr => {
+function estaCompletoYSinRepetidos(arr) {
   // Acá podría chequear que la longitud de arr sea 9 y que en arr esté el 1, el 2, el 3, ..., el 9.
   return arr.length === 9 && ["1", "2", "3", "4", "5", "6", "7", "8", "9"].every(n => arr.includes(n));
-};
+}
 
-const estanTodosCompletosSinRepetidos = puzzle => {
+function estanTodosCompletosSinRepetidos(puzzle) {
   // puzzle es un array de arrays, que pueden ser filas, columnas o bloques
   // Chequea si el puzzle está resuelto. Devuelve true si la grilla está completa sin repetidos.
   return puzzle.every(arr => estaCompletoYSinRepetidos(arr));
-};
+}
 
-
-
-const mostrarErrorMsg = (msg) => {
+function mostrarErrorMsg(msg){
   const errorDiv = document.getElementById('error-msg');
   errorDiv.textContent = msg;
-};
+}
 
 // Tal vez habría que validar y sanitizar en algún lugar el input.
-const isInputOk = (str) => {
+function isInputOk(str){
   // Devuelve true si la longitud de str es LONGITUD_PUZZLE
   return str.length === LONGITUD_PUZZLE;
   // return !(str.length < LONGITUD_PUZZLE || str.length > LONGITUD_PUZZLE);
-};
+}
 
-const coincidenTodas = (puzzle_a, puzzle_b) => {
+function coincidenTodas(puzzle_a, puzzle_b){
   // acá estoy mezclando, every es método de array y el input está en string
   const puzzle_a_arr = puzzle_a.split('');
   const puzzle_b_arr = puzzle_b.split('');
@@ -135,7 +133,7 @@ const coincidenTodas = (puzzle_a, puzzle_b) => {
       return celda === puzzle_b_arr[index];
     }
   });
-};
+}
 
 const puzzlesAndSolutions = [
   [
@@ -161,11 +159,11 @@ const puzzlesAndSolutions = [
 ];
 
 const LIBRARY_OF_SOLUTIONS = puzzlesAndSolutions;
-const getSolutionFromLibrary = (index) => {
+function getSolutionFromLibrary(index){
   return LIBRARY_OF_SOLUTIONS[index][1];
 }
 
-const isNumberBetweenOneAndNine = (cellContent) => {
+function isNumberBetweenOneAndNine(cellContent){
       // cellContent is String, ideally, a one character length string representing a number betwen
       // 1 and 9.
       // Returns true if cellContent can be casted to a number and that number is in [1 .. 9] range
@@ -181,11 +179,11 @@ const isNumberBetweenOneAndNine = (cellContent) => {
         console.error(error);
         return false;
       }
-    };
+}
 
 // REVISAR ESTA FUNCIÓN. No me parece que acá tenga que chequear la longitud del input.
 // Quizá eso tenga que ir asociado al cambio de input en textarea, cada vez que pasa eso
-const crearNuevoPuzzle = (input) => {
+function crearNuevoPuzzle(input){
       // input es String.
       // input es una cadena de 81 caracteres, válida para un puzzle sudoku.
       // Devuelve un objeto con filas del tablero.
@@ -206,9 +204,9 @@ const crearNuevoPuzzle = (input) => {
         mostrarErrorMsg(INPUT_ERROR_MSG);
       }
       return puzzle;
-    };
+}
 
-const solveSudoku = (input) => {
+function solveSudoku(input){
      let indice = 0;
      let solution = getSolutionFromLibrary(indice);
      let solHasBeenFound = coincidenTodas(input, solution);
@@ -223,9 +221,9 @@ const solveSudoku = (input) => {
      else {
        return solution;
      }
-   };
+}
 
-const inicializarTablero = (event) => {
+function inicializarTablero(event){
   console.log("Inicializando el tablero");
   console.log(event.target.value);
   console.log(crearNuevoPuzzle(event.target.value)); // esto solo devuelve un objeto. Tal vez está de más. Tal vez habría que usar esta función para rellenar la grilla.
