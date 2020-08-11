@@ -1,26 +1,14 @@
-/* TO DO:
-- Tal vez debería detectar cuando el input en textarea tiene la longitud correcta y dejar de mostrar mensaje de error, limpiar el errorDiv. Así sólo lo muestra cuando es menos o más de la longitud deseada.
-*/
-
-const textArea = document.getElementById('text-input');
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Load a simple puzzle into the text area
-  textArea.value = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
-});
-
-/*
-  Export your functions for testing in Node.
-  Note: The `try` block is to prevent errors on
-  the client side
+/* To do:
+- Revisar código duplicado o redundante
+- Ante un evento de input de una celda, antes de rellenar ESA celda (así no chequeo todas, si no sólo la que va a cambiar), chequear si es válido el contenido, el número que se quiere insertar, si no está en ninguno de los subgrupos de la celda: fila, columna, bloque.
+- Ver porqué no funciona solveSudoku, ¿por qué obtengo el mensaje de error: "Uncaught TypeError: LIBRARY_OF_SOLUTIONS[index] is undefined"?
+- En solveSudokuHandler, (y quizá solveSudoku), antes de tratar de hallar una solución, habría que chequear que haya un puzzle empezado con cierta cantidad de pistas, no? Como mínimo que en textInput no hay una cadena vacía, es más que hay una cadena con la longitud adecuada para un puzzle, una cadena válida como puzzle. Creo que hay una función que chequea eso!
+- En handleGrillaTablero ¿no habría que utilizar la función isNumberBetweenOneAndNine? ¿Y en handleTextInput también?
 */
 
 const LETRAS_FILAS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 const INPUT_ERROR_MSG = 'Error: Expected puzzle to be 81 characters long.';
-
-
-/* grilla = una lista de filas producto de obtenerFilasHelper */
-
+const NO_SOLUTION = 'No solution found';
 const LONGITUD_FILA = 9;
 
 const LONGITUD_PUZZLE = 81;
@@ -36,6 +24,119 @@ const INICIO_FIN_BLOQUES = [ [[0,0], [2,2]],
 	                     [[6,6], [8,8]]
                            ]; // el primer par de cada subarray contiene fila y columna de la celda inicial del bloque, arriba a la izquierda
                               // el segundo par contiene fila y columna de la celda final, abajo a la derecha.
+
+
+const textInput = document.getElementById('text-input');
+
+const grillaTablero = document.getElementsByClassName("sudoku-input");
+ 
+const clearBtn = document.getElementById("clear-button");
+const solveBtn = document.getElementById("solve-button"); 
+
+// Manejadores de eventos //
+
+function handleTextInput(e) {
+  const input = e.target.value.split('');
+  if (input.length === LONGITUD_PUZZLE) { 
+    mostrarErrorMsg("");//Borra el posible mensaje de error que hubiera habido antes.
+    // Rellenar la grillaTablero
+    for (let i = 0; i < input.length; i++){
+      // antes de rellenar la celda, ver si es un punto, caso en el cual no hay que hacer nada.
+      if (input[i] === '.') grillaTablero[i].value = "";
+      else { grillaTablero[i].value = input[i];}
+    }
+  }
+  else {
+   mostrarErrorMsg(INPUT_ERROR_MSG);
+  }
+}
+
+function handleGrillaTableroInput(e){
+  let puzzleText = "";
+  // recorrer las celdas
+  for (let i = 0; i < grillaTablero.length; i++){
+    const celda = grillaTablero[i];
+    // chequeo si no es un carácter numérico
+    // ¿Acá no habría que usar la función isNumberBetweenOneAndNine? o poner este test ahí, o también usar alguna función que cheque si es un valor lícito en el sentido de que no se repite en la fila, columna o bloque de la celda?
+    if (/^\D*$/.test(celda.value)) puzzleText += "."; // quizá podría haber chequeado también si value es una cadena vacía...
+    else puzzleText += celda.value;
+  }
+  textInput.value = puzzleText;
+}
+
+function cleanBoard(){
+  // limpiar textarea
+  textInput.value = "";
+  // limpiar la grillaTablero
+  for (let i = 0; i < grillaTablero.length; i++){
+    grillaTablero[i].value = "";
+  }
+}
+
+function inicializarTablero(event){
+  console.log("Inicializando el tablero");
+  console.log(event.target.value);
+  console.log(crearNuevoPuzzle(event.target.value)); // esto solo devuelve un objeto. Tal vez está de más. Tal vez habría que usar esta función para rellenar la grilla.
+};
+
+function solveSudokuHandler(){
+// usar solveSudoku, pasarle el contenido de textInput
+// luego la solución debe reemplazar el contenido de textInput y como consecuencia también se tiene que actualizar la grillaTablero
+
+  const solution = solveSudoku(textInput.value);
+// PARÁ, ¿y si no se encontró solución? solución va a ser una cadena vacía. Habría que chequear eso primero y en ese caso mostrar un mensaje, en vez de borrar todo. A mí me parece mejor así.
+  if (solution.length === LONGITUD_PUZZLE){ // se encontró solución
+    textInput.value = solution;
+    // rellenar la grillaTablero.
+    // quizá tendría que ubicar en funciones aparte parte del código de los manejadores de evento para grilla y para textinput
+    // que también se podrían utilizar acá.
+      for (let i = 0; i < solution.length; i++){
+        grillaTablero[i].value = input[i];
+      }
+  } else {
+    mostrarErrorMsg(NO_SOLUTION);
+  }
+}
+
+////////////// AGREGO LOS EVENT LISTENERS ////////////////////
+
+textInput.addEventListener('input', handleTextInput);
+
+// Agrego un event listener a cada celda
+for (let i = 0; i < grillaTablero.length; i++){
+  const celda = grillaTablero[i];
+  celda.addEventListener('input', handleGrillaTableroInput);
+}
+
+// botón clear
+clearBtn.addEventListener('click', cleanBoard);
+
+// Botón solve
+solveBtn.addEventListener('click', solveSudokuHandler);
+
+// Documento recién cargado
+document.addEventListener('DOMContentLoaded', () => {
+  // Load a simple puzzle into the text area
+  textInput.value = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
+  // llamo a handleTextInput para que rellene la grilla
+  // o llamar a una función que rellena la grilla.
+  const input = textInput.value.split('');
+  if (input.length === LONGITUD_PUZZLE) { 
+    mostrarErrorMsg("");//Borra el posible mensaje de error que hubiera habido antes.
+    // Rellenar la grillaTablero
+    for (let i = 0; i < input.length; i++){
+      // antes de rellenar la celda, ver si es un punto, caso en el cual no hay que hacer nada.
+      if (input[i] === '.') grillaTablero[i].value = "";
+      else { grillaTablero[i].value = input[i];}
+    }
+  }
+});
+
+/*
+  Export your functions for testing in Node.
+  Note: The `try` block is to prevent errors on
+  the client side
+*/
 
 function obtenerFilasHelper(str){
   // str es String.
@@ -55,6 +156,7 @@ function obtenerFilasHelper(str){
   return filas;
 }
 
+/* grilla = una lista de filas producto de obtenerFilasHelper */
 function obtenerUnBloque(celda_inicio, celda_final, grilla) {
   const bloque = [];
   const fila_inicial = celda_inicio[0];
@@ -205,7 +307,11 @@ function crearNuevoPuzzle(input){
       }
       return puzzle;
 }
-
+/* 
+String -> String
+Devuelve una solución para el input.
+El método de resolución es buscar en una base de soluciones conocidas.
+*/
 function solveSudoku(input){
      let indice = 0;
      let solution = getSolutionFromLibrary(indice);
@@ -222,17 +328,6 @@ function solveSudoku(input){
        return solution;
      }
 }
-
-function inicializarTablero(event){
-  console.log("Inicializando el tablero");
-  console.log(event.target.value);
-  console.log(crearNuevoPuzzle(event.target.value)); // esto solo devuelve un objeto. Tal vez está de más. Tal vez habría que usar esta función para rellenar la grilla.
-};
-
-// quiero agregar un event listener para cuando hay un cambio en textArea
-// se ejecute crearNuevoPuzzle
-textArea.addEventListener('input', inicializarTablero);
-
 
 try {
   module.exports = {
