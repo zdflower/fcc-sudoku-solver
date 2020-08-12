@@ -1,7 +1,6 @@
 /* To do:
 - Revisar código duplicado o redundante
 - Ante un evento de input de una celda, antes de rellenar ESA celda (así no chequeo todas, si no sólo la que va a cambiar), chequear si es válido el contenido, el número que se quiere insertar, si no está en ninguno de los subgrupos de la celda: fila, columna, bloque.
-- Ver porqué no funciona solveSudoku, ¿por qué obtengo el mensaje de error: "Uncaught TypeError: LIBRARY_OF_SOLUTIONS[index] is undefined"?
 - En solveSudokuHandler, (y quizá solveSudoku), antes de tratar de hallar una solución, habría que chequear que haya un puzzle empezado con cierta cantidad de pistas, no? Como mínimo que en textInput no hay una cadena vacía, es más que hay una cadena con la longitud adecuada para un puzzle, una cadena válida como puzzle. Creo que hay una función que chequea eso!
 - En handleGrillaTablero ¿no habría que utilizar la función isNumberBetweenOneAndNine? ¿Y en handleTextInput también?
 */
@@ -24,8 +23,7 @@ const INICIO_FIN_BLOQUES = [ [[0,0], [2,2]],
 	                     [[6,6], [8,8]]
                            ]; // el primer par de cada subarray contiene fila y columna de la celda inicial del bloque, arriba a la izquierda
                               // el segundo par contiene fila y columna de la celda final, abajo a la derecha.
-
-const puzzlesAndSolutions = [
+const LIBRARY_OF_SOLUTIONS = [
   [
     '1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.',
     '135762984946381257728459613694517832812936745357824196473298561581673429269145378'
@@ -47,9 +45,6 @@ const puzzlesAndSolutions = [
     '827549163531672894649831527496157382218396475753284916962415738185763249374928651'
   ]
 ];
-
-
-const LIBRARY_OF_SOLUTIONS = puzzlesAndSolutions;
 
 const textInput = document.getElementById('text-input');
 
