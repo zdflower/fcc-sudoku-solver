@@ -116,7 +116,7 @@ function solveSudokuHandler(){
     // quizá tendría que ubicar en funciones aparte parte del código de los manejadores de evento para grilla y para textinput
     // que también se podrían utilizar acá.
       for (let i = 0; i < solution.length; i++){
-        grillaTablero[i].value = input[i];
+        grillaTablero[i].value = input[i]; //¿Qué sería input? ¿la solución? ¿el recién modificado value de textInput? Me parece qué sí.
       }
   } else {
     mostrarErrorMsg(NO_SOLUTION);
@@ -315,19 +315,11 @@ El método de resolución es buscar en una base de soluciones conocidas.
 */
 function solveSudoku(input){
      let indice = 0;
-     let solution = getSolutionFromLibrary(indice);
-     let solHasBeenFound = coincidenTodas(input, solution);
-     while (indice < LIBRARY_OF_SOLUTIONS.length && !solHasBeenFound){
-       indice++;// acá puede haber un problema porque al llegar al final, adelanto el índice más allá de una posición válida del array. Por eso es el error de LIBRARY_OF_SOLUTIONS[index] is undefined!
-       solution = getSolutionFromLibrary(indice); 
-       solHasBeenFound = coincidenTodas(input, solution);
+     while (indice < LIBRARY_OF_SOLUTIONS.length && !coincidenTodas(input, getSolutionFromLibrary(indice))){
+       indice++;
      }
-     if (indice === LIBRARY_OF_SOLUTIONS.length){
-       return "";
-     }
-     else {
-       return solution;
-     }
+     if (indice === LIBRARY_OF_SOLUTIONS.length) return "";
+     else { return getSolutionFromLibrary(indice); } // un "problemita" de escribir así el loop sería repetir getSolutionFromLibrary(indice)
 }
 
 try {
