@@ -115,9 +115,10 @@ function solveSudokuHandler(){
     // rellenar la grillaTablero.
     // quizá tendría que ubicar en funciones aparte parte del código de los manejadores de evento para grilla y para textinput
     // que también se podrían utilizar acá.
-      for (let i = 0; i < solution.length; i++){
-        grillaTablero[i].value = input[i]; //¿Qué sería input? ¿la solución? ¿el recién modificado value de textInput? Me parece qué sí.
-      }
+    const input = solution.split(''); // tal vez muy mejorable???!!!
+    for (let i = 0; i < solution.length; i++){
+      grillaTablero[i].value = input[i]; //¿Qué sería input? ¿la solución? ¿el recién modificado value de textInput? Me parece qué sí.
+    }
   } else {
     mostrarErrorMsg(NO_SOLUTION);
   }
@@ -262,7 +263,7 @@ function coincidenTodas(puzzle_a, puzzle_b){
   });
 }
 function getSolutionFromLibrary(index){
-  console.error(`En getSolutionFromLibrary(). index: ${index}`);
+  //console.error(`En getSolutionFromLibrary(). index: ${index}`);
   return LIBRARY_OF_SOLUTIONS[index][1];
 }
 
