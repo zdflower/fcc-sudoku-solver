@@ -1,6 +1,7 @@
 /* To do:
 - Revisar código duplicado o redundante.
 - Revisar código no utilizado e innecesario como estánCompletosYRepetidos(), inicializarTablero, crearNuevoPuzzle, etc.
+- Tal vez crearNuevoPuzzle tiene salvación. Pienso que podría reescribirla para que produzca un objeto que represente el estado actual del puzzle y contenga las filas, columnas y bloques del puzzle. Y usar crearNuevoPuzzle en los eventhandlers que tengan que actualizar textarea y grillatablero para chequear que sea correcto lo que se quiere incluir. Por ejemplo en esos eventhandlers debería chequearse que no haya repetidos en filas, columnas y bloques y para eso sería útil además de una función que chequee repetidos en un array y otra que chequee que no haya repetidos en todos los arrays que se pasen, una función que genere esos arrays (filas, columnas, bloques).
 - Ante un evento de input de una celda, antes de rellenar ESA celda (así no chequeo todas, si no sólo la que va a cambiar), chequear si es válido el contenido, el número que se quiere insertar, si no está en ninguno de los subgrupos de la celda: fila, columna, bloque.
 - En solveSudokuHandler, (y quizá solveSudoku), antes de tratar de hallar una solución, habría que chequear que haya un puzzle empezado con cierta cantidad de pistas, no? Como mínimo que en textInput no hay una cadena vacía, es más que hay una cadena con la longitud adecuada para un puzzle, una cadena válida como puzzle. Creo que hay una función que chequea eso!
 - En handleGrillaTablero ¿no habría que utilizar la función isNumberBetweenOneAndNine? ¿Y en handleTextInput también?
@@ -56,6 +57,7 @@ const solveBtn = document.getElementById("solve-button");
 
 // Manejadores de eventos //
 
+// Responde a la introducción de texto en el textarea
 function handleTextInput(e) {
   const input = e.target.value.split('');
   if (input.length === LONGITUD_PUZZLE) { 
@@ -72,6 +74,7 @@ function handleTextInput(e) {
   }
 }
 
+// Responde a la introducción de texto en las celdas de la grilla
 function handleGrillaTableroInput(e){
   let puzzleText = "";
   // recorrer las celdas
