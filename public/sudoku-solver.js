@@ -97,12 +97,6 @@ function cleanBoard(){
   }
 }
 
-function inicializarTablero(event){
-  console.log("Inicializando el tablero");
-  console.log(event.target.value);
-  console.log(crearNuevoPuzzle(event.target.value)); // esto solo devuelve un objeto. Tal vez está de más. Tal vez habría que usar esta función para rellenar la grilla.
-};
-
 function solveSudokuHandler(){
 // usar solveSudoku, pasarle el contenido de textInput
 // luego la solución debe reemplazar el contenido de textInput y como consecuencia también se tiene que actualizar la grillaTablero
