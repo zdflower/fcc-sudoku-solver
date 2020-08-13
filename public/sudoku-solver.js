@@ -60,7 +60,8 @@ const solveBtn = document.getElementById("solve-button");
 // Responde a la introducción de texto en el textarea
 function handleTextInput(e) {
   const input = e.target.value.split('');
-  if (input.length === LONGITUD_PUZZLE) { 
+  if (input.length === LONGITUD_PUZZLE) { // ¿No debería también chequear que sean todos números de 1 a 9? ¿y que no haya repeticiones en las filas, columnas y bloques?, es decir, que sea un puzzle válido.
+    // tal vez debería usar una función aparte que chequeara todo eso y devolviera un booleano.
     mostrarErrorMsg("");//Borra el posible mensaje de error que hubiera habido antes.
     // Rellenar la grillaTablero
     for (let i = 0; i < input.length; i++){
@@ -241,7 +242,6 @@ function mostrarErrorMsg(msg){
 function isInputLengthOk(str){
   // Devuelve true si la longitud de str es LONGITUD_PUZZLE
   return str.length === LONGITUD_PUZZLE;
-  // return !(str.length < LONGITUD_PUZZLE || str.length > LONGITUD_PUZZLE);
 }
 
 function coincidenTodas(puzzle_a, puzzle_b){
@@ -280,7 +280,7 @@ function isNumberBetweenOneAndNine(cellContent){
 
 function crearNuevoPuzzle(input){
       // input es String.
-      // input es una cadena de 81 caracteres, válida para un puzzle sudoku.
+      // input es una cadena de 81 caracteres, válida para un puzzle sudoku, que contiene sólo números de 1 a 9.
       // Devuelve un objeto con filas del tablero.
       const puzzle = {};
 
