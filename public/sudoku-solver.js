@@ -1,5 +1,6 @@
 /* To do:
-- Revisar código duplicado o redundante
+- Revisar código duplicado o redundante.
+- Revisar código no utilizado e innecesario como estánCompletosYRepetidos(), inicializarTablero, crearNuevoPuzzle, etc.
 - Ante un evento de input de una celda, antes de rellenar ESA celda (así no chequeo todas, si no sólo la que va a cambiar), chequear si es válido el contenido, el número que se quiere insertar, si no está en ninguno de los subgrupos de la celda: fila, columna, bloque.
 - En solveSudokuHandler, (y quizá solveSudoku), antes de tratar de hallar una solución, habría que chequear que haya un puzzle empezado con cierta cantidad de pistas, no? Como mínimo que en textInput no hay una cadena vacía, es más que hay una cadena con la longitud adecuada para un puzzle, una cadena válida como puzzle. Creo que hay una función que chequea eso!
 - En handleGrillaTablero ¿no habría que utilizar la función isNumberBetweenOneAndNine? ¿Y en handleTextInput también?
