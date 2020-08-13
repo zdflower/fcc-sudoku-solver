@@ -238,7 +238,7 @@ function mostrarErrorMsg(msg){
 }
 
 // Tal vez habría que validar y sanitizar en algún lugar el input.
-function isInputOk(str){
+function isInputLengthOk(str){
   // Devuelve true si la longitud de str es LONGITUD_PUZZLE
   return str.length === LONGITUD_PUZZLE;
   // return !(str.length < LONGITUD_PUZZLE || str.length > LONGITUD_PUZZLE);
@@ -278,15 +278,13 @@ function isNumberBetweenOneAndNine(cellContent){
       }
 }
 
-// REVISAR ESTA FUNCIÓN. No me parece que acá tenga que chequear la longitud del input.
-// Quizá eso tenga que ir asociado al cambio de input en textarea, cada vez que pasa eso
 function crearNuevoPuzzle(input){
       // input es String.
       // input es una cadena de 81 caracteres, válida para un puzzle sudoku.
       // Devuelve un objeto con filas del tablero.
       const puzzle = {};
 
-      if (isInputOk(input)) {
+      if (isInputLengthOk(input)) { 
         const filas = obtenerFilasHelper(input);
         try {
           LETRAS_FILAS.forEach((key, i) => {
