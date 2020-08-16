@@ -191,8 +191,11 @@ function obtenerUnBloque(celda_inicio, celda_final, grilla) {
   return bloque;
 }
 
+/* Array de filas -> Array de bloques
+ Grilla es un array que representa la grilla, donde cada celda es fila,columna
+ Devuelve un array con los bloques.
+*/
 function obtenerBloques(grilla) {
-  // grilla es un array que representa la grilla, donde cada celda es fila,columna
   // para cada bloque en inicio_fin_bloques
   // recorrés grilla desde bloque[0][0] hasta bloque[1][0], es decir desde fila inicio hasta fila final
   // y para cada fila recorrés las columnas desde inicio hasta final: bloque[0][1] hasta bloque[1][1]
@@ -212,10 +215,13 @@ function obtenerUnaColumna(col, grilla){
   return columna;
 }
 
+/* Array -> Array
+ La grilla es un array de filas, la grilla es cuadrada, la longitud de la primera fila es la cantidad de columnas.
+ Devuelve un array de columnas.
+ */
 function obtenerColumnas(grilla) {
   const columnas = [];
-  const total_columnas = grilla[0].length; // la grilla es un array de filas, la grilla es cuadrada, la longitud de la primera fila es la cantidad de columnas.
-  for (let col = 0; col < total_columnas; col++){
+  const total_columnas = grilla[0].length;   for (let col = 0; col < total_columnas; col++){
     const columna = obtenerUnaColumna(col, grilla);
     columnas.push(columna);
   }
@@ -278,28 +284,65 @@ function isNumberBetweenOneAndNine(cellContent){
       }
 }
 
+/* String -> Object
+ Input es una cadena de 81 caracteres, válida para un puzzle sudoku, que contiene sólo números de 1 a 9.
+ Devuelve un objeto con filas, columnas y bloques del tablero.
+*/
 function crearNuevoPuzzle(input){
-      // input es String.
-      // input es una cadena de 81 caracteres, válida para un puzzle sudoku, que contiene sólo números de 1 a 9.
-      // Devuelve un objeto con filas del tablero.
-      const puzzle = {};
+  const puzzle = {};
 
-      if (isInputLengthOk(input)) { 
-        const filas = obtenerFilasHelper(input);
-        try {
-          LETRAS_FILAS.forEach((key, i) => {
-            puzzle[key] = filas[i];
-          // acá puede haber un error si filas no tiene la misma longitud que LETRAS_FILAS
-          // me parece que no da error si no que simplemente le asigna undefined a cada clave.
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
-        mostrarErrorMsg(INPUT_ERROR_MSG);
-      }
-      return puzzle;
+  if (isInputLengthOk(input) && sonTodosNumerosDe1a9(input)) { 
+    puzzle.filas = obtenerFilasHelper(input);
+    puzzle.columnas = obtenerColumnas(puzzle.filas);
+    puzzle.bloques = obtenerBloques(puzzle.filas); 
+  } else {
+    mostrarErrorMsg(INPUT_ERROR_MSG);
+  }
+  return puzzle;
 }
+
+/* String -> Boolean 
+Devuelve true si todos los caracteres de la cadena representan números entre 1 y 9. No se tienen en cuenta los '.'
+*/
+function sonTodosNumerosDe1a9(str){
+  return str.split('').every(item => (item !== '.') || isNumberBetweenOneAndNine(item));
+}
+
+/*
+{Array de filas, Array de columnas, Array de bloques} -> Boolean
+*/
+function noHayRepetidosEnLosGrupos(puzzle){
+  return puzzle.filas.every(fila => noTieneRepetidos(fila)) 
+         && puzzle.columnas.every(col => noTieneRepetidos(col))
+         && puzzle.bloques.every(bloq => noTieneRepetidos(bloq));
+}
+
+/*
+Array -> Boolean
+Devuelve true si todos los elementos que representan números del array son únicos. No se tienen en cuenta las cadenas vacías o los puntos.
+Se supone que arr tiene longitud 9.
+*/
+function noTieneRepetidos(arr){
+  //Podría utilizar regular expressions? Por ejemplo, pienso en la posibilidad de decir que el grupo de 1 a 9, cada uno, está 0 o 1 vez en arr. O podría usar otra vez every y para cada número en el rango 1-9 está no más de una vez
+// Podría chequear que para cada número de 1 a 9 buscar que no esté más de una vez. Usar una función que busca si un elemento en particular está repetido.
+  return arr.every(num => (num !== '' || num !== '.') || !estaRepetido(arr, num)); // true si es una cadena vacía o un punto o si no está repetido
+}
+
+/*
+Array, Char -> Boolean
+Recibe un array de caracteres o string que representan números de 1 a 9, y un caracter o string  que representa un número de 1 a 9.
+El tamaño del array debe ser de 9 elementos.
+Devuelve true si el carácter está repetido en el array.
+*/
+function estaRepetido(array, num){
+  // Veo cuántas veces aparece y si es más de una devuelve true.
+  let apariciones = 0;
+  for (let i = 0; i < array.length; i++){
+    if(array[i] === num) apariciones++;
+  }
+  return apariciones > 1;
+}
+
 /* 
 String -> String
 Devuelve una solución para el input.
