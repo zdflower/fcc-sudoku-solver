@@ -34,21 +34,34 @@ suite('Functional Tests', () => {
       // done();
     });
   });
-  
+
   suite('Clear and solve buttons', () => {
     // Pressing the "Clear" button clears the sudoku 
     // grid and the text area
     test('Function clearInput()', done => {
-
+      const textArea = document.getElementById("text-input");
+      const celdasGrillaTablero = document.getElementsByClassName("sudoku-input");
+      const clearBtn = document.getElementById("clear-button");
+      // simular evento de click
+      // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
+      // si en algún momento entiendo cómo simular el click del botón clear, el test sería algo así:
+      // click
+      // assert: textArea.value o textContent o como se llame donde va el texto del textarea === ""
+      // assert: para toda celda de celdasGrillaTablero, el contenido de la celda va a ser ""
       // done();
     });
     
     // Pressing the "Solve" button solves the puzzle and
     // fills in the grid with the solution
     test('Function showSolution(solve(input))', done => {
-
+      const solveBtn = document.getElementById("solve-button");
+      // algo similar al test de clearInput pero se va a partir de ingresar un puzzle en text area, clickear el boton solve, entonces vamos a hacer: 
+      // assert: el contenido de textarea va a ser la solución
+      // assert: el contenido de cada celda va a corresponder con cada número de la solución.
       // done();
     });
   });
 });
+
+
 
