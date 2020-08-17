@@ -60,21 +60,31 @@ const solveBtn = document.getElementById("solve-button");
 // Responde a la introducción de texto en el textarea
 function handleTextInput(e) {
   const input = e.target.value.split('');
-  if (input.length === LONGITUD_PUZZLE) { // ¿No debería también chequear que sean todos números de 1 a 9? ¿y que no haya repeticiones en las filas, columnas y bloques?, es decir, que sea un puzzle válido.
-    // tal vez debería usar una función aparte que chequeara todo eso y devolviera un booleano.
-    mostrarErrorMsg("");//Borra el posible mensaje de error que hubiera habido antes.
-    // Rellenar la grillaTablero
-    for (let i = 0; i < input.length; i++){
-      // antes de rellenar la celda, ver si es un punto, caso en el cual no hay que hacer nada.
-      if (input[i] === '.') grillaTablero[i].value = "";
-      else { grillaTablero[i].value = input[i];}
-    }
+  if (input.length === LONGITUD_PUZZLE) {
+  /*************************** REVISAR Y REESCRIBIR ESTA MARAñA ******************************/
+    if (sonTodosNumerosDe1a9(e.target.value)){
+      const puzzle = crearNuevoPuzzle(e.target.value);
+      if (noHayRepetidosEnLosGrupos(puzzle)){ 
+        mostrarErrorMsg("");//Borra el posible mensaje de error que hubiera habido antes. Tal vez la función debería llamarse mostrarMsg.
+        // Rellenar la grillaTablero
+        for (let i = 0; i < input.length; i++){
+          // antes de rellenar la celda, ver si es un punto, caso en el cual no hay que hacer nada.
+          if (input[i] === '.') grillaTablero[i].value = "";
+          else { grillaTablero[i].value = input[i];}
+        }
+      } else {
+      mostrarErrorMsg('Hay repetidos');
+      }
+   } else {
+    mostrarErrorMsg('No son todos números de 1 a 9 o .'); 
+   }    
   }
   else {
-   mostrarErrorMsg(INPUT_ERROR_MSG);
+    mostrarErrorMsg('Longitud incorrecta');
   }
 }
 
+/*******************REVISAR Y REESCRIBIR************************************/
 // Responde a la introducción de texto en las celdas de la grilla
 function handleGrillaTableroInput(e){
   let puzzleText = "";
@@ -82,7 +92,8 @@ function handleGrillaTableroInput(e){
   for (let i = 0; i < grillaTablero.length; i++){
     const celda = grillaTablero[i];
     // chequeo si no es un carácter numérico
-    // ¿Acá no habría que usar la función isNumberBetweenOneAndNine? o poner este test ahí, o también usar alguna función que cheque si es un valor lícito en el sentido de que no se repite en la fila, columna o bloque de la celda?
+    // ¿Acá no habría que usar la función isNumberBetweenOneAndNine? o poner este test ahí, o también usar alguna función que cheque si es un valor lícito en el sentido de que no se repite en la fila, columna o bloque de la celda? 
+    //!!!!!!!!!!! OJO !!!!!!!!: en el test de abajo, que en la rama else va a dejar pasar un 0, que es un número. Y en la rama if, todo lo que no es número lo pasa a '.', eso no es lo que se especifica, en las celdas sólo se admiten números de 1 a 9 o cadena vacía, no es correcto que si escribís cualquier cosa te lo convierta en '.' y tampoco que te tome como válido al 0.
     if (/^\D*$/.test(celda.value)) puzzleText += "."; // quizá podría haber chequeado también si value es una cadena vacía...
     else puzzleText += celda.value;
   }
@@ -266,17 +277,14 @@ function getSolutionFromLibrary(index){
   return LIBRARY_OF_SOLUTIONS[index][1];
 }
 
-function isNumberBetweenOneAndNine(cellContent){
-      // cellContent is String, ideally, a one character length string representing a number betwen
-      // 1 and 9.
-      // Returns true if cellContent can be casted to a number and that number is in [1 .. 9] range
-      // Returns false otherwise.
-      // Reflections:
-      // Maybe it should check that the number is integer? That depends on cellContent, if it is
-      // just a character, then the number can't have decimal part other than 0.
-
+/* String -> Boolean
+  The input is a one character length string that should represent a number betwen 1 and 9.
+  Returns true if str can be casted to a number and that number is in [1 .. 9] range
+  Returns false otherwise.
+*/
+function isNumberBetweenOneAndNine(char){
       try {
-        const number = Number(cellContent);
+        const number = Number(char);
         return number > 0 && number < 10;
       } catch (error) {
         console.error(error);
@@ -305,11 +313,12 @@ function crearNuevoPuzzle(input){
 Devuelve true si todos los caracteres de la cadena representan números entre 1 y 9. No se tienen en cuenta los '.'
 */
 function sonTodosNumerosDe1a9(str){
-  return str.split('').every(item => (item !== '.') || isNumberBetweenOneAndNine(item));
+  return str.split('').every(item => (item === '.') || isNumberBetweenOneAndNine(item));
 }
 
-/*
-{Array de filas, Array de columnas, Array de bloques} -> Boolean
+/* { Array de filas, Array de columnas, Array de bloques } -> Boolean
+El input es un puzzle en la forma de un objeto con las filas, columnas y bloques.
+Devuelve true si no hay repetidos en ningún bloque, fila o columna.
 */
 function noHayRepetidosEnLosGrupos(puzzle){
   return puzzle.filas.every(fila => noTieneRepetidos(fila)) 
@@ -325,7 +334,7 @@ Se supone que arr tiene longitud 9.
 function noTieneRepetidos(arr){
   //Podría utilizar regular expressions? Por ejemplo, pienso en la posibilidad de decir que el grupo de 1 a 9, cada uno, está 0 o 1 vez en arr. O podría usar otra vez every y para cada número en el rango 1-9 está no más de una vez
 // Podría chequear que para cada número de 1 a 9 buscar que no esté más de una vez. Usar una función que busca si un elemento en particular está repetido.
-  return arr.every(num => (num !== '' || num !== '.') || !estaRepetido(arr, num)); // true si es una cadena vacía o un punto o si no está repetido
+  return arr.every(num => (num === '.') || !estaRepetido(arr, num)); // true si es una cadena vacía o un punto o si no está repetido
 }
 
 /*
@@ -356,6 +365,20 @@ function solveSudoku(input){
      if (indice === LIBRARY_OF_SOLUTIONS.length) return "";
      else { return getSolutionFromLibrary(indice); } // un "problemita" de escribir así el loop sería repetir getSolutionFromLibrary(indice)
 }
+
+/*
+String -> Boolean
+Devuelve true si el input tiene la longitud correcta para el puzzle, si todos son números de 1 a 9 o '.', y si no hay repetidos en los grupos.
+*/
+function isInputOk(str){
+  if(isInputLengthOk(str) && sonTodosNumerosDe1a9(str)){
+    const puzzle = crearNuevoPuzzle(str);
+    return noHayRepetidosEnLosGrupos(puzzle);
+  }
+  return false;
+}
+
+// EXPORTAR LAS FUNCIONES PARA TESTEARLAS
 
 try {
   module.exports = {
