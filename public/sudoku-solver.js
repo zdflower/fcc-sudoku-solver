@@ -86,18 +86,29 @@ function handleTextInput(e) {
 
 /*******************REVISAR Y REESCRIBIR************************************/
 // Responde a la introducción de texto en las celdas de la grilla
-function handleGrillaTableroInput(e){
-  let puzzleText = "";
-  // recorrer las celdas
-  for (let i = 0; i < grillaTablero.length; i++){
-    const celda = grillaTablero[i];
-    // chequeo si no es un carácter numérico
-    // ¿Acá no habría que usar la función isNumberBetweenOneAndNine? o poner este test ahí, o también usar alguna función que cheque si es un valor lícito en el sentido de que no se repite en la fila, columna o bloque de la celda? 
-    //!!!!!!!!!!! OJO !!!!!!!!: en el test de abajo, que en la rama else va a dejar pasar un 0, que es un número. Y en la rama if, todo lo que no es número lo pasa a '.', eso no es lo que se especifica, en las celdas sólo se admiten números de 1 a 9 o cadena vacía, no es correcto que si escribís cualquier cosa te lo convierta en '.' y tampoco que te tome como válido al 0.
-    if (/^\D*$/.test(celda.value)) puzzleText += "."; // quizá podría haber chequeado también si value es una cadena vacía...
-    else puzzleText += celda.value;
+function handleGrillaTableroInput(){
+  let puzzleText = convertirGrillaATxt(); //supongo que la longitud es correcta, ya que la cantidad de celdas es la correcta, pero quizá debería chequear igual, no?
+  if (sonTodosNumerosDe1a9(puzzleText)){
+    const puzzle = crearNuevoPuzzle(puzzleText);
+    if (noHayRepetidosEnLosGrupos(puzzle)){
+      mostrarErrorMsg("");//Borra el mensaje.
+      textInput.value = puzzleText;
+    } else {
+      mostrarErrorMsg("Hay repetidos");
+    }
+  } else {
+    mostrarErrorMsg("Debe ser un número de 1 a 9");
   }
-  textInput.value = puzzleText;
+}
+
+function convertirGrillaATxt(){
+  let puzzleText = "";
+  for (let i = 0; i < grillaTablero.length; i++){
+     const celda = grillaTablero[i];
+     if (celda.value === "") puzzleText += ".";
+     else puzzleText += celda.value;
+  }
+  return puzzleText;
 }
 
 function cleanBoard(){
