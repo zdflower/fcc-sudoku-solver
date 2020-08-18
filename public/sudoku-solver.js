@@ -397,7 +397,15 @@ try {
     crearNuevoPuzzle,
     solveSudoku,
     cleanBoard,
-    solveSudokuHandler 
+    solveSudokuHandler,
+    obtenerFilasHelper,
+    obtenerUnBloque,
+    obtenerBloques,
+    coincidenTodas,
+    obtenerColumnas,
+    isInputOk,
+    estaCompletoYSinRepetidos,
+    estanTodosCompletosSinRepetidos
   };
 } catch (e) {}
 

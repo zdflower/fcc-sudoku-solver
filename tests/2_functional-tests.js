@@ -19,7 +19,7 @@ suite('Functional Tests', () => {
     Solver = require('../public/sudoku-solver.js');
   });
   
-  suite('Text area and sudoku grid update automatically', () => {
+  suite.skip('Text area and sudoku grid update automatically', () => {
     // Entering a valid number in the text area populates 
     // the correct cell in the sudoku grid with that number
     test('Valid number in text area populates correct cell in grid', done => {
