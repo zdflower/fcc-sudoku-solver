@@ -58,7 +58,7 @@ suite('Functional Tests', () => {
   suite('Clear and solve buttons', () => {
     // Pressing the "Clear" button clears the sudoku 
     // grid and the text area
-    test('Function clearInput()', done => {
+    test('Function clearInput(). function cleanBoard()', done => {
       const textArea = document.getElementById("text-input");
       const celdasGrillaTablero = document.getElementsByClassName("sudoku-input");
       const clearBtn = document.getElementById("clear-button");
@@ -74,7 +74,7 @@ suite('Functional Tests', () => {
     
     // Pressing the "Solve" button solves the puzzle and
     // fills in the grid with the solution
-    test('Function showSolution(solve(input))', done => {
+    test('Function showSolution(solve(input)): function solveSudokuHandler()', done => {
       const solveBtn = document.getElementById("solve-button");
       // habría que poner un puzzle para resolver
       const textArea = document.getElementById("text-input");
@@ -83,8 +83,9 @@ suite('Functional Tests', () => {
       Solver.solveSudokuHandler(); //esto va a buscar una solución y la va a poner en texArea.value reemplazando el puzzle incompleto.
       const solution = '473891265851726394926345817568913472342687951197254638734162589685479123219538746';
       assert.equal(textArea.value, solution);
-      // COMPLETAR: ---v
-      // assert: el contenido de cada celda va a corresponder con cada número de la solución.
+      const celdas = document.getElementsByClassName("sudoku-input");
+      const textoGrilla = Solver.convertirHTMLCollectionInputATxt(celdas);
+      assert.equal(textoGrilla, solution); // el contenido de cada celda va a corresponder con cada número de la solución.
       done();
     });
   });
