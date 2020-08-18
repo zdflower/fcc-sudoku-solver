@@ -58,12 +58,12 @@ const solveBtn = document.getElementById("solve-button");
 // Manejadores de eventos //
 
 // Responde a la introducción de texto en el textarea
-function handleTextInput(e) {
-  const input = e.target.value.split('');
+function handleTextInput() {
+  const input = textInput.value.split(''); //e.target.value.split('');
   if (input.length === LONGITUD_PUZZLE) {
   /*************************** REVISAR Y REESCRIBIR ESTA MARAñA ******************************/
-    if (sonTodosNumerosDe1a9(e.target.value)){
-      const puzzle = crearNuevoPuzzle(e.target.value);
+    if (sonTodosNumerosDe1a9(textInput.value)){
+      const puzzle = crearNuevoPuzzle(textInput.value);
       if (noHayRepetidosEnLosGrupos(puzzle)){ 
         mostrarErrorMsg("");//Borra el posible mensaje de error que hubiera habido antes. Tal vez la función debería llamarse mostrarMsg.
         // Rellenar la grillaTablero
@@ -109,6 +109,16 @@ function convertirGrillaATxt(){
      else puzzleText += celda.value;
   }
   return puzzleText;
+}
+
+function convertirHTMLCollectionInputATxt(inputCollection){
+  let txt = "";
+  for (let i = 0; i < inputCollection.length; i++){
+     const input = inputCollection[i];
+     if (input.value === "") txt += ".";
+     else txt += input.value;
+  }
+  return txt;
 }
 
 function cleanBoard(){
@@ -405,7 +415,11 @@ try {
     obtenerColumnas,
     isInputOk,
     estaCompletoYSinRepetidos,
-    estanTodosCompletosSinRepetidos
+    estanTodosCompletosSinRepetidos,
+    convertirGrillaATxt,
+    convertirHTMLCollectionInputATxt,
+    handleTextInput,
+    handleGrillaTableroInput 
   };
 } catch (e) {}
 

@@ -19,14 +19,20 @@ suite('Functional Tests', () => {
     Solver = require('../public/sudoku-solver.js');
   });
   
-  suite.skip('Text area and sudoku grid update automatically', () => {
+  suite('Text area and sudoku grid update automatically', () => {
     // Entering a valid number in the text area populates 
     // the correct cell in the sudoku grid with that number
     test('Valid number in text area populates correct cell in grid', done => {
-      // escribir algo en el text area, que sea correcto, que cumpla las condiciones
-      // ¿llamar al manejador de evento del text area? ¿o se activaría solo con lo anterior?
-      // obtener las celdas, obtener la cadena, chequear que en la misma posición del contenido de textarea y en la cadena a partir de las celdas está el mismo valor.
-      // done();
+      const textArea = document.getElementById('text-input');
+      textArea.value = '1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
+      // Completo un hueco ----------v
+      textArea.value = '1.5..2.84..63812.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
+      
+      Solver.handleTextInput();
+      const celdas = document.getElementsByClassName("sudoku-input");
+      const textoGrilla = Solver.convertirHTMLCollectionInputATxt(celdas);
+      assert.equal(textoGrilla, textArea.value);
+      done();
     });
 
     // Entering a valid number in the grid automatically updates
@@ -35,7 +41,17 @@ suite('Functional Tests', () => {
       // escribir algo correcto en una celda
       // debería activarse el manejador de eventos para las celdas.
       // chequear que se actualizó correctamente el text area.
-      // done();
+      const textArea = document.getElementById('text-input');
+      textArea.value = '1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
+      // escribo en la celda cuyo id es B5 un 8. Para que quede como en el test de Valid number in text area populates correct cell in grid.
+      document.getElementById('B5').value = '8';
+      // llamo al manejador de las celdas
+      Solver.handleGrillaTableroInput();
+      // obtengo el texto a partir de la grilla y lo comparo con el de text area
+      const celdas = document.getElementsByClassName("sudoku-input");
+      const textoGrilla = Solver.convertirHTMLCollectionInputATxt(celdas);
+      assert.equal(textoGrilla, textArea.value);
+      done();
     });
   });
 
