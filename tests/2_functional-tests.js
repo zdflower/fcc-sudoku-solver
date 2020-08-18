@@ -23,14 +23,18 @@ suite('Functional Tests', () => {
     // Entering a valid number in the text area populates 
     // the correct cell in the sudoku grid with that number
     test('Valid number in text area populates correct cell in grid', done => {
-
+      // escribir algo en el text area, que sea correcto, que cumpla las condiciones
+      // ¿llamar al manejador de evento del text area? ¿o se activaría solo con lo anterior?
+      // obtener las celdas, obtener la cadena, chequear que en la misma posición del contenido de textarea y en la cadena a partir de las celdas está el mismo valor.
       // done();
     });
 
     // Entering a valid number in the grid automatically updates
     // the puzzle string in the text area
     test('Valid number in grid updates the puzzle string in the text area', done => {
-
+      // escribir algo correcto en una celda
+      // debería activarse el manejador de eventos para las celdas.
+      // chequear que se actualizó correctamente el text area.
       // done();
     });
   });
