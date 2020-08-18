@@ -395,7 +395,9 @@ try {
   module.exports = {
     isNumberBetweenOneAndNine,
     crearNuevoPuzzle,
-    solveSudoku 
+    solveSudoku,
+    cleanBoard,
+    solveSudokuHandler 
   };
 } catch (e) {}
 
