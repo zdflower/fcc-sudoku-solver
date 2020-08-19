@@ -1,6 +1,4 @@
-/* REESCRIBIR ALGUNOS DE LOS TESTS QUE NO VAN A FUNCIONAR DESPUÉS DE LOS CAMBIOS REALIZADOS EN ESTA RAMA
- *
- *
+/*
  *       FILL IN EACH UNIT TEST BELOW COMPLETELY
  *       -----[Keep the tests in the same order!]----
  *       (if additional are added, keep them at the very end!)
@@ -14,10 +12,6 @@ const jsdom = require('jsdom');
 
 const { JSDOM } = jsdom;
 let Solver;
-
-// helper
-//const { obtenerFilasHelper, isInputOk, obtenerUnBloque, obtenerBloques, obtenerColumnas, estaCompletoYSinRepetidos, estanTodosCompletosSinRepetidos, coincidenTodas } = require('../helpers');
-//
 
 suite('UnitTests', () => {
   suiteSetup(() => {
@@ -53,20 +47,44 @@ suite('UnitTests', () => {
     });
   });
 
-  suite.skip('Function crearNuevoPuzzle()', () => {
+  suite('Function crearNuevoPuzzle()', () => {
     test('Parses a valid puzzle string into an object', done => {
       const input = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
       const expectedPuzzle = {
-                              "A": [".", ".", "9", ".", ".", "5", ".", "1", "."],
-                              "B": ["8", "5", ".", "4", ".", ".", ".", ".", "2"],
-                              "C": ["4", "3", "2", ".", ".", ".", ".", ".", "."],
-                              "D": ["1", ".", ".", ".", "6", "9", ".", "8", "3"],
-                              "E": [".", "9", ".", ".", ".", ".", ".", "6", "."],
-                              "F": ["6", "2", ".", "7", "1", ".", ".", ".", "9"],
-                              "G": [".", ".", ".", ".", ".", ".", "1", "9", "4"],
-                              "H": ["5", ".", ".", ".", ".", "4", ".", "3", "7"],
-                              "I": [".", "4", ".", "3", ".", ".", "6", ".", "."]
-                              };
+        "filas": [
+               [".", ".", "9", ".", ".", "5", ".", "1", "."],
+               ["8", "5", ".", "4", ".", ".", ".", ".", "2"],
+               ["4", "3", "2", ".", ".", ".", ".", ".", "."],
+               ["1", ".", ".", ".", "6", "9", ".", "8", "3"],
+               [".", "9", ".", ".", ".", ".", ".", "6", "."],
+               ["6", "2", ".", "7", "1", ".", ".", ".", "9"],
+               [".", ".", ".", ".", ".", ".", "1", "9", "4"],
+               ["5", ".", ".", ".", ".", "4", ".", "3", "7"],
+               [".", "4", ".", "3", ".", ".", "6", ".", "."]
+             ],
+        "columnas" : [ 
+                [".", "8", "4", "1", ".", "6", ".", "5", "."],
+                [".", "5", "3", ".", "9", "2", ".", ".", "4"],
+                ["9", ".", "2", ".", ".", ".", ".", ".", "."],
+                [".", "4", ".", ".", ".", "7", ".", ".", "3"],
+                [".", ".", ".", "6", ".", "1", ".", ".", "."],
+                ["5", ".", ".", "9", ".", ".", ".", "4", "."],
+                [".", ".", ".", ".", ".", ".", "1", ".", "6"],
+                ["1", ".", ".", "8", "6", ".", "9", "3", "."],
+                [".", "2", ".", "3", ".", "9", "4", "7", "."]
+              ],
+        "bloques" : [
+                [".", ".", "9", "8", "5", ".", "4", "3", "2"],
+                ['.', '.', '5', '4', '.', '.', '.', '.', '.'],
+                ['.', '1', '.', '.', '.', '2', '.', '.', '.'],
+                ['1', '.', '.', '.', '9', '.', '6', '2', '.'],
+                ['.', '6', '9', '.', '.', '.', '7', '1', '.'],
+                ['.', '8', '3', '.', '6', '.', '.', '.', '9'],
+                ['.', '.', '.', '5', '.', '.', '.', '4', '.'],
+                ['.', '.', '.', '.', '.', '4', '3', '.', '.'],
+                ['1', '9', '4', '.', '3', '7', '6', '.', '.']
+              ]
+      };
 
       assert.deepEqual(Solver.crearNuevoPuzzle(input), expectedPuzzle);
       done();
@@ -263,41 +281,3 @@ suite("Función helper coincidenTodas", () => {
 
 });
 
-/*
-
-COMENTARIOS
-
-1) sobre  test('Shows an error for puzzles that are not 81 numbers long'):
-
-    const errorDiv = document.getElementById('error-msg'); // esto me confunde acerca de lo que
-      // debe hacer la función que estoy testeando
-      // porque parece implicar que tiene que modificar este div?
-
-      // en algún momento habrá que agregar event listeners?
-
-      // ¿no tendría que ir en la parte de test funcional?
-      // ¿?
-
-      // ¿o tendría que ser otra función aparte de crearNuevoPuzzle que muestre el mensaje de error?
-
-      // ¿Tendrías que primero llamar a Solver.crearNuevoPuzzle(shortStr)
-      // suponiendo que ahora crearNuevoPuzzle también actualiza el view?
-      // y después ver si en errorDiv está errorMsg?
-      // assert.equals(Solver.crearNuevoPuzzle(shortStr), errorMsg)
-      // done();
-
-      // Voy a escribir un test, sin importarme la manipulación del dom, voy viendo
-      // si no no avanzo para nada y no tiene sentido.
-
-      // o tal vez hacer eso que dije antes, de que crearNuevoPuzzle use una función que modifique
-      // el error div, entonces primero llamo a crearNuevoPuzzle y después comparo el contenido
-      // de errordiv con errormsg
-
-      // Hay algo que no me cierra, que no veo, lo que yo veo es que por un lado tendría que estar
-      // este crearNuevoPuzzle y por otro lado la función que testea si el input es válido,
-      // que en todo caso la usaría crearNuevoPuzzle antes de hacer su trabajo, no sé.
-      // porque si no no estarías haciendo un test unitario.
-      // no entiendo esta suit de test, se supone que una suit es un conjunto de tests para una
-      // misma función, acá parecieran testearse distintas funciones o una función que hace
-      // distintas cosas, lo cual no es tan unitario...
-*/
