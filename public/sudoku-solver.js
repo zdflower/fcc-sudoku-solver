@@ -1,14 +1,10 @@
 /* To do:
 - Revisar código duplicado o redundante.
-- Revisar código no utilizado e innecesario como estánCompletosYRepetidos(), inicializarTablero, crearNuevoPuzzle, etc.
-- Tal vez crearNuevoPuzzle tiene salvación. Pienso que podría reescribirla para que produzca un objeto que represente el estado actual del puzzle y contenga las filas, columnas y bloques del puzzle. Y usar crearNuevoPuzzle en los eventhandlers que tengan que actualizar textarea y grillatablero para chequear que sea correcto lo que se quiere incluir. Por ejemplo en esos eventhandlers debería chequearse que no haya repetidos en filas, columnas y bloques y para eso sería útil además de una función que chequee repetidos en un array y otra que chequee que no haya repetidos en todos los arrays que se pasen, una función que genere esos arrays (filas, columnas, bloques).
-- Ante un evento de input de una celda, antes de rellenar ESA celda (así no chequeo todas, si no sólo la que va a cambiar), chequear si es válido el contenido, el número que se quiere insertar, si no está en ninguno de los subgrupos de la celda: fila, columna, bloque.
-- En solveSudokuHandler, (y quizá solveSudoku), antes de tratar de hallar una solución, habría que chequear que haya un puzzle empezado con cierta cantidad de pistas, no? Como mínimo que en textInput no hay una cadena vacía, es más que hay una cadena con la longitud adecuada para un puzzle, una cadena válida como puzzle. Creo que hay una función que chequea eso!
-- En handleGrillaTablero ¿no habría que utilizar la función isNumberBetweenOneAndNine? ¿Y en handleTextInput también?
+- Revisar código no utilizado e innecesario. 
 */
 
 const LETRAS_FILAS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
-const INPUT_ERROR_MSG = 'Error: Expected puzzle to be 81 characters long.';
+const INPUT_LENGTH_ERROR_MSG = 'Error: Expected puzzle to be 81 characters long.';
 const NO_SOLUTION = 'No solution found';
 const LONGITUD_FILA = 9;
 
@@ -59,16 +55,15 @@ const solveBtn = document.getElementById("solve-button");
 
 // Responde a la introducción de texto en el textarea
 function handleTextInput() {
-  const input = textInput.value.split(''); //e.target.value.split('');
+  const input = textInput.value.split('');
   if (input.length === LONGITUD_PUZZLE) {
   /*************************** REVISAR Y REESCRIBIR ESTA MARAñA ******************************/
     if (sonTodosNumerosDe1a9(textInput.value)){
       const puzzle = crearNuevoPuzzle(textInput.value);
       if (noHayRepetidosEnLosGrupos(puzzle)){ 
-        mostrarErrorMsg("");//Borra el posible mensaje de error que hubiera habido antes. Tal vez la función debería llamarse mostrarMsg.
+        cleanErrorMsg();
         // Rellenar la grillaTablero
         for (let i = 0; i < input.length; i++){
-          // antes de rellenar la celda, ver si es un punto, caso en el cual no hay que hacer nada.
           if (input[i] === '.') grillaTablero[i].value = "";
           else { grillaTablero[i].value = input[i];}
         }
@@ -80,7 +75,7 @@ function handleTextInput() {
    }    
   }
   else {
-    mostrarErrorMsg('Longitud incorrecta');
+    mostrarErrorMsg(INPUT_LENGTH_ERROR_MSG);
   }
 }
 
@@ -91,7 +86,7 @@ function handleGrillaTableroInput(){
   if (sonTodosNumerosDe1a9(puzzleText)){
     const puzzle = crearNuevoPuzzle(puzzleText);
     if (noHayRepetidosEnLosGrupos(puzzle)){
-      mostrarErrorMsg("");//Borra el mensaje.
+      cleanErrorMsg();
       textInput.value = puzzleText;
     } else {
       mostrarErrorMsg("Hay repetidos");
@@ -130,6 +125,10 @@ function cleanBoard(){
   }
 }
 
+function cleanErrorMsg(){
+  mostrarErrorMsg("");
+}
+
 function solveSudokuHandler(){
 // usar solveSudoku, pasarle el contenido de textInput
 // luego la solución debe reemplazar el contenido de textInput y como consecuencia también se tiene que actualizar la grillaTablero
@@ -160,10 +159,8 @@ for (let i = 0; i < grillaTablero.length; i++){
   celda.addEventListener('input', handleGrillaTableroInput);
 }
 
-// botón clear
 clearBtn.addEventListener('click', cleanBoard);
 
-// Botón solve
 solveBtn.addEventListener('click', solveSudokuHandler);
 
 // Documento recién cargado
@@ -325,7 +322,7 @@ function crearNuevoPuzzle(input){
     puzzle.columnas = obtenerColumnas(puzzle.filas);
     puzzle.bloques = obtenerBloques(puzzle.filas); 
   } else {
-    mostrarErrorMsg(INPUT_ERROR_MSG);
+    mostrarErrorMsg(INPUT_LENGTH_ERROR_MSG);
   }
   return puzzle;
 }
@@ -399,8 +396,6 @@ function isInputOk(str){
   return false;
 }
 
-// EXPORTAR LAS FUNCIONES PARA TESTEARLAS
-
 try {
   module.exports = {
     isNumberBetweenOneAndNine,
@@ -423,43 +418,3 @@ try {
   };
 } catch (e) {}
 
-/*
-COMENTARIOS
-
-1)
-
-En referencia al resultado de << crearNuevoPuzzle >>:
-
-No sé qué tipo de objeto sería.
-
-En el viewer se nombran las filas desde A hasta I.
-
->>>> PERO ¡OJO! que las columnas las numera desde 1 y no desde 0. <<<<
-
-Para generar ese objeto, tal vez tendría que escribir una clase, y para las filas utilizar split.
-
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
-
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split
-
-Para obtener un array con los caracteres de una cadena: cadena.split('')
-
-2)
-
-Me parece que crearNuevoPuzzle podría ser una función helper o incluso estar de más
-porque para rellenar el tablero de index.html con los números para inicializarlo
-no haría falta crear el objeto, si no que se puede utlizar un código similar que recorra
-la lista de letras y las filas para acceder a las celdas y modificarles el valor si hay un número
-o dejarlas vacías si hay un punto. Sería algo así como
-por cada i; con i desde 0 hasta longitud de filas - 1:
-  letra = letras[i]
-  por cada fila, recorrer la fila con un índice j:
-    entonces vas a armar la clase del elemento del dom a modificar así:
-    clase = `${letra}${j}`
-    celda = document.getElementByClass(clase)[0]; // o algo así
-    celda.textContent = filas[i][j]; // le introducís el valor que corresponde.
-Todo eso previo chequeo de que el input es válido.
-
-3)
-En qué momento se usaría la función isNumberBetweenOneAndNine()?
-*/
