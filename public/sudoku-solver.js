@@ -322,7 +322,7 @@ function crearNuevoPuzzle(input){
     puzzle.columnas = obtenerColumnas(puzzle.filas);
     puzzle.bloques = obtenerBloques(puzzle.filas); 
   } else {
-    mostrarErrorMsg(INPUT_LENGTH_ERROR_MSG);
+    mostrarErrorMsg(INPUT_LENGTH_ERROR_MSG); // acá podría pasar que el problema no esté en la longitud si no en que no sean todos números de 1 a 9 y entonces el mensaje de error estaría mal.
   }
   return puzzle;
 }
