@@ -96,8 +96,11 @@ A journey through client-side testing with javascript
 
 <https://stackoverflow.com/questions/24412124/referenceerror-require-is-not-defined>
 
+#### Módulos
+
+<https://javascript.info/modules-intro>
+
 ### Observaciones
 
-- Quise tener el código más organizado y separado en archivos pero para que funcione en el navegador tendría que instalar algo para que transforme el código que el navegador no interpreta, por ejemplo los require. Algo como browserify o require.js
 - Un puzzle se resuelve mediante una "base de datos" de soluciones conocidas. Los puzzles que no están en la "base de
 datos", para esta implementación de sudoku, no tienen solución.
