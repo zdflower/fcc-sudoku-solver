@@ -1,7 +1,14 @@
-/* To do:
+/* ToDo:
 - Revisar código duplicado o redundante.
 - Revisar código no utilizado e innecesario. 
 */
+
+/*
+  Export your functions for testing in Node.
+  Note: The `try` block is to prevent errors on
+  the client side
+*/
+
 import { puzzlesAndSolutions as LIBRARY_OF_SOLUTIONS } from './puzzle-strings.js';
 
 const LETRAS_FILAS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
@@ -109,19 +116,15 @@ function cleanErrorMsg(){
 }
 
 function solveSudokuHandler(){
-// usar solveSudoku, pasarle el contenido de textInput
-// luego la solución debe reemplazar el contenido de textInput y como consecuencia también se tiene que actualizar la grillaTablero
-
   const solution = solveSudoku(textInput.value);
-// PARÁ, ¿y si no se encontró solución? solución va a ser una cadena vacía. Habría que chequear eso primero y en ese caso mostrar un mensaje, en vez de borrar todo. A mí me parece mejor así.
   if (solution.length === LONGITUD_PUZZLE){ // se encontró solución
     textInput.value = solution;
     // rellenar la grillaTablero.
     // quizá tendría que ubicar en funciones aparte parte del código de los manejadores de evento para grilla y para textinput
     // que también se podrían utilizar acá.
-    const input = solution.split(''); // tal vez muy mejorable???!!!
+    const input = solution.split(''); 
     for (let i = 0; i < solution.length; i++){
-      grillaTablero[i].value = input[i]; //¿Qué sería input? ¿la solución? ¿el recién modificado value de textInput? Me parece qué sí.
+      grillaTablero[i].value = input[i]; 
     }
   } else {
     mostrarErrorMsg(NO_SOLUTION);
@@ -142,29 +145,19 @@ clearBtn.addEventListener('click', cleanBoard);
 
 solveBtn.addEventListener('click', solveSudokuHandler);
 
-// Documento recién cargado
 document.addEventListener('DOMContentLoaded', () => {
   // Load a simple puzzle into the text area
   textInput.value = '..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..';
-  // llamo a handleTextInput para que rellene la grilla
-  // o llamar a una función que rellena la grilla.
+  // Rellena la grilla.
   const input = textInput.value.split('');
   if (input.length === LONGITUD_PUZZLE) { 
-    mostrarErrorMsg("");//Borra el posible mensaje de error que hubiera habido antes.
-    // Rellenar la grillaTablero
+    mostrarErrorMsg("");
     for (let i = 0; i < input.length; i++){
-      // antes de rellenar la celda, ver si es un punto, caso en el cual no hay que hacer nada.
       if (input[i] === '.') grillaTablero[i].value = "";
       else { grillaTablero[i].value = input[i];}
     }
   }
 });
-
-/*
-  Export your functions for testing in Node.
-  Note: The `try` block is to prevent errors on
-  the client side
-*/
 
 function obtenerFilasHelper(str){
   // str es String.
