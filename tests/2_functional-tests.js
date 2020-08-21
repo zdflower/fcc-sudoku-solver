@@ -30,7 +30,7 @@ suite('Functional Tests', () => {
       
       Solver.handleTextInput();
       const celdas = document.getElementsByClassName("sudoku-input");
-      const textoGrilla = Solver.convertirHTMLCollectionInputATxt(celdas);
+      const textoGrilla = convertirHTMLCollectionInputATxt(celdas);
       assert.equal(textoGrilla, textArea.value);
       done();
     });
@@ -49,7 +49,7 @@ suite('Functional Tests', () => {
       Solver.handleGrillaTableroInput();
       // obtengo el texto a partir de la grilla y lo comparo con el de text area
       const celdas = document.getElementsByClassName("sudoku-input");
-      const textoGrilla = Solver.convertirHTMLCollectionInputATxt(celdas);
+      const textoGrilla = convertirHTMLCollectionInputATxt(celdas);
       assert.equal(textoGrilla, textArea.value);
       done();
     });
@@ -84,7 +84,7 @@ suite('Functional Tests', () => {
       const solution = '473891265851726394926345817568913472342687951197254638734162589685479123219538746';
       assert.equal(textArea.value, solution);
       const celdas = document.getElementsByClassName("sudoku-input");
-      const textoGrilla = Solver.convertirHTMLCollectionInputATxt(celdas);
+      const textoGrilla = convertirHTMLCollectionInputATxt(celdas);
       assert.equal(textoGrilla, solution); // el contenido de cada celda va a corresponder con cada número de la solución.
       done();
     });
@@ -132,4 +132,14 @@ function todas(celdas, fn_str){
 // ¿Cómo conviene chequearlo? ¿Por longitud igual a 0 o por igualdad con ""?
 function esVacia(str){
   return str.length === 0;
+}
+
+function convertirHTMLCollectionInputATxt(inputCollection){
+  let txt = "";
+  for (let i = 0; i < inputCollection.length; i++){
+     const input = inputCollection[i];
+     if (input.value === "") txt += ".";
+     else txt += input.value;
+  }
+  return txt;
 }
