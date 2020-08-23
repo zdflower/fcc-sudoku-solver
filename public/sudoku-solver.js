@@ -33,7 +33,6 @@ const solveBtn = document.getElementById("solve-button");
 function handleTextInput() {
   const input = textInput.value.split('');
   if (input.length === LONGITUD_PUZZLE) {
-  /* REVISAR Y REESCRIBIR */
     if (sonTodosNumerosDe1a9(textInput.value)){
       const puzzle = crearNuevoPuzzle(textInput.value);
       if (noHayRepetidosEnLosGrupos(puzzle)){ 
@@ -55,9 +54,8 @@ function handleTextInput() {
   }
 }
 
-/* REVISAR Y REESCRIBIR */
 function handleGrillaTableroInput(){
-  let puzzleText = convertirGrillaATxt(); // Supongo que la longitud es correcta, pero quizá debería chequear igual.
+  let puzzleText = convertirGrillaATxt(); // Supongo que la longitud es correcta.
   if (sonTodosNumerosDe1a9(puzzleText)){
     const puzzle = crearNuevoPuzzle(puzzleText);
     if (noHayRepetidosEnLosGrupos(puzzle)){
@@ -84,9 +82,7 @@ function solveSudokuHandler(){
   const solution = solveSudoku(textInput.value);
   if (solution.length === LONGITUD_PUZZLE){ // se encontró solución
     textInput.value = solution;
-    // rellenar la grillaTablero.
-    // quizá tendría que ubicar en funciones aparte parte del código de los manejadores de evento para grilla y para textinput
-    // que también se podrían utilizar acá.
+    // Rellenar la grillaTablero. Quizá podría ser una función aparte.
     const input = solution.split(''); 
     for (let i = 0; i < solution.length; i++){
       grillaTablero[i].value = input[i]; 
@@ -362,4 +358,3 @@ try {
     handleGrillaTableroInput 
   };
 } catch (e) {}
-
