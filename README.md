@@ -29,12 +29,23 @@ Based on this boilerplate: <https://github.com/freeCodeCamp/boilerplate-project-
 * All logic can go into `public/sudoku-solver.js`.
 * Create all of the unit/functional tests in `tests/1_unit-tests.js` and `tests/2_functional-tests.js`.
 
-
 ### Recursos
 
-foreach <https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/forEach>
+#### SUDOKU
 
-Testear dos objetos <https://www.chaijs.com/api/assert/#method_deepequal>
+<https://en.wikipedia.org/wiki/Sudoku>
+
+<https://en.wikipedia.org/wiki/Mathematics_of_Sudoku>
+
+<https://en.wikipedia.org/wiki/Latin_square>
+
+<https://en.wikipedia.org/wiki/Sudoku_solving_algorithms>
+
+<https://en.wikipedia.org/wiki/Dancing_Links>
+
+<https://en.wikipedia.org/wiki/Exact_cover#Sudoku>
+
+<https://en.wikipedia.org/wiki/Simplex_algorithm>
 
 #### Client side javascript
 
@@ -85,6 +96,10 @@ how to mock window/document with mocha/chai - stack overflow
 
 A journey through client-side testing with javascript
 <https://www.telerik.com/blogs/journey-client-side-testing-javascript>
+
+foreach <https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/forEach>
+
+Testear dos objetos <https://www.chaijs.com/api/assert/#method_deepequal>
 
 #### Javascript syntax and the browser
 
