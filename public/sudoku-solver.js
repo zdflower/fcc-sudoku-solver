@@ -42,6 +42,8 @@ function handleTextInput() {
           if (input[i] === '.') grillaTablero[i].value = "";
           else { grillaTablero[i].value = input[i];}
         }
+        // Check if the puzzle is done
+        if(estaResuelto(puzzle)) mostrarErrorMsg('¡Sudoku resuelto!');
       } else {
       mostrarErrorMsg('Hay repetidos');
       }
@@ -61,6 +63,8 @@ function handleGrillaTableroInput(){
     if (noHayRepetidosEnLosGrupos(puzzle)){
       cleanErrorMsg();
       textInput.value = puzzleText;
+      // Check if is it solved
+      if(estaResuelto(puzzle)) mostrarErrorMsg('¡Sudoku resuelto!');
     } else {
       mostrarErrorMsg("Hay repetidos");
     }
@@ -336,6 +340,13 @@ function mostrarErrorMsg(msg){
 
 function cleanErrorMsg(){
   mostrarErrorMsg("");
+}
+
+/* {[[String]] [[String]] [[String]]} -> Boolean
+Devuelve true si el puzzle está resuelto.
+*/
+function estaResuelto(puzzle){
+  return estanTodosCompletosSinRepetidos(puzzle.filas);
 }
 
 try {
